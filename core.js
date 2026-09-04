@@ -115,13 +115,19 @@
         }
         return;
       }
-      var p = 0.30 + 0.04 * S.day;
+      var p = 0.30 + 0.05 * S.day;
       if (rng() < p) {
         var tier = S.day <= 2 ? 1 : (S.day <= 5 ? 2 : 3);
         var kind = rng() < 0.55 ? 'tech' : 'life';
         sl.topping = { side: 'boss', tier: tier, kind: kind, label: pick(SPICY_LABELS[kind]) };
         S.stats.spicyPlaced++;
         log('魔王在 ' + hh(sl.i) + ' 加了「' + sl.topping.label + '」', 'boss');
+        return;
+      }
+      // 後期：沒人經營的無主時間，會直接被生活填滿
+      if (S.day >= 4 && sl.owner === 'none' && rng() < 0.12) {
+        sl.owner = 'boss'; sl.value = CFG.CRUST_BASE_VALUE; sl.progress = 0;
+        log('魔王直接把 ' + hh(sl.i) + ' 填滿了工作', 'boss');
       }
     }
 

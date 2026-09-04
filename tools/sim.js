@@ -14,6 +14,14 @@ function mulberry32(a) {
 
 var strategies = {
   idle: function () {},
+  // 模擬「反應不及」的人類：每片只有 55% 機率來得及操作，且只用簡單直覺
+  human: function (g, r) {
+    if (r() > 0.55) return;
+    var sl = g.southSlice();
+    if (sl.topping && sl.topping.side === 'boss') { if (g.clearInfo().ok) g.clearSpicy(); return; }
+    if (sl.owner === 'none' && g.canCrust() && g.S.money > 80) { g.buildCrust(); return; }
+    if (!sl.topping && g.canTopping(1)) g.addTopping(1);
+  },
   cautious: function (g) {
     var sl = g.southSlice();
     if (sl.topping && sl.topping.side === 'boss' && g.clearInfo().ok && g.clearInfo().free) g.clearSpicy();
@@ -32,10 +40,11 @@ var strategies = {
 
 function runOne(strategy, seed) {
   var g = Core.createGame({ rng: mulberry32(seed) });
+  var botRng = mulberry32(seed + 100000);
   var guard = 0;
   while (g.S.phase !== 'result' && guard++ < 10000) {
     if (g.S.phase === 'play') {
-      strategy(g);
+      strategy(g, botRng);
       var r = g.nextStep();
       if (r.dayEnded) g.continueDay();
     } else if (g.S.phase === 'dayend') {
