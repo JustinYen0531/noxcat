@@ -1,3 +1,15 @@
+# 截圖與暫存輸出
 out/
-*.png
+
+# 生成資產的原始工作目錄（每次生成都是新資料夾，只把挑選過的成品複製到 assets/ 再進版控）
+assets/_raw/
+
+# Meowa API key，絕對不可進版控
+.env
+.env.*
+
+# npx skills add 安裝的工具（用 skills-lock.json 還原，不進版控）
+.agents/
+.claude/skills/
+
 node_modules/

@@ -3,11 +3,18 @@
 版本：2026-09-04 v1 ｜ 對應程式版本：v0.6（橫向）
 Visual Theme：**Cyber Hell Ruins** ｜ Art Style：**全息線框呈現（方案 2）× 厚塗暗黑科幻材質（方案 3）**
 
-> 本文件用途：盤點所有要正式生成的資產，並給每一項足夠的規格與 Prompt。**本階段不生成任何圖片。**
+> 本文件用途：盤點所有要正式生成的資產，並給每一項足夠的規格與 Prompt。
+
+> ⚠️ **2026-09-04 更新：Prompt 格式已改。** 專案改用 Meowa `game-assets` skill 生成，該工具**禁止** diffusion 式 prompt（關鍵字堆疊、`Negative:` 區塊、重複品質詞）。
+> 本文件第 0.3 節的 `[STYLE]` / `[NEG]` 字串**不再使用**，改用簡短自然語言，一致性靠 `--reference-image` 鎖定。
+> 各資產條目底下的舊 Prompt 請當作**內容描述**參考，實際下指令時改寫成一到三句自然語言。
+> 實際指令、參數與逐批流程見 **`ASSET_PIPELINE.md`**。
+> 以下第 1～9 節的資產清單、尺寸、優先級、共用策略**全部仍然有效**。
 
 ---
 
-## 0. 全域規則（所有 Prompt 共同遵守）— 即 D. Prompt Consistency Rules
+## 0. 全域規則 — 即 D. Prompt Consistency Rules
+（0.1、0.2、0.4～0.7 仍有效；0.3、0.8 的 prompt 格式已被 `ASSET_PIPELINE.md` 取代）
 
 ### 0.1 風格定義
 
@@ -42,7 +49,7 @@ Visual Theme：**Cyber Hell Ruins** ｜ Art Style：**全息線框呈現（方�
 `the Overlord: a giant black cat-demon seen only from the waist up, lower body dissolving into a black hole abyss; tall pointed ears, crown of jagged spikes, layered tattered cape edges; body is matte black with thin terminal-green glyph seams and dissolving pixel fragments at the edges; a red glowing diamond gem on the chest; narrow slit eyes glowing hard red; holding a long black spear with a red glowing blade in one hand; front three-quarter view, slight low angle`
 
 **[NOX-LOCK]**
-`Noxcat: a small round cute black cat with big cyan glowing eyes, a tiny hooded tech-jacket with cyan trim, a holographic laptop; soft cel-shaded solid body (not wireframe), friendly expressive face; front view, eye level`
+`Noxcat: A cute chibi black cat character closely matching the provided NOXCAT IP design, with a large head and small body, oversized bright lime-green eyes, tall pointed ears, and a friendly expressive face. The cat wears silver-and-black aviator goggles with translucent green lenses resting on its forehead, a black high-collar utility vest over a white short-sleeve shirt, and a small round lime-green cat emblem hanging from the front zipper. Black fur with subtle dark-gray highlights and lime-green accent details. Soft clean cel-shaded solid body, bold black outlines, slightly cartoonish game-character proportions, not realistic, not wireframe. Front view, eye level.`
 
 **[STYLE]**（每個 Prompt 開頭）
 `holographic wireframe rendering combined with painterly dark sci-fi textures; cyber hell ruins; deep void black background; thin terminal-green wire lines, glyphs and data points as air decoration; painterly volumetric fog; solid objects have matte painted surfaces with hard clean silhouettes; distant objects are translucent wireframes fading into darkness; high precision details against vast empty void; game-art readability, clean edges, no clutter on focal elements`
