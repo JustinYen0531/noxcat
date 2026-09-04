@@ -3,138 +3,149 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#1b1530">
+<meta name="theme-color" content="#0a0912">
 <title>NOXCAT 披薩時鐘</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #1b1530;
-    --bg2: #261d45;
-    --panel: #2f2554;
-    --text: #f3ecff;
-    --muted: #b8aed6;
-    --gold: #ffcf5a;
-    --player: #ffcf5a;
-    --boss: #c0392b;
-    --neutral: #e9d8b4;
-    --nox: #6ee7f0;
-    --danger: #ff6b6b;
-    --btn: #3d3170;
-    --btn-on: #5b4a9e;
-    --btn-dis: #2a2347;
+    --bg: #0a0912; --ink: #f4ecd8; --muted: #8e86a6; --dim: #55506b;
+    --gold: #ffbf47; --gold-2: #e0951f; --red: #ff5a4e; --cyan: #5fe3e8;
+    --panel: #110e1b; --btn: #1c1730; --line: rgba(255,255,255,.08);
+    --f-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --f-disp: "Noto Serif TC", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", serif;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
-    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
-    overscroll-behavior: none; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--f-body); overscroll-behavior: none; }
   body { display: flex; justify-content: center; }
-  #app { width: 100%; max-width: 480px; height: 100dvh; min-height: 100vh; display: flex; flex-direction: column; position: relative; }
+  #app { width: 100%; max-width: 480px; height: 100dvh; min-height: 100vh; position: relative; overflow: hidden;
+    background:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.7), transparent 60%),
+      radial-gradient(1px 1px at 78% 9%, rgba(255,255,255,.6), transparent 60%),
+      radial-gradient(1.5px 1.5px at 88% 34%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(1px 1px at 30% 62%, rgba(255,255,255,.45), transparent 60%),
+      radial-gradient(1px 1px at 64% 71%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(1.5px 1.5px at 8% 84%, rgba(255,255,255,.4), transparent 60%),
+      radial-gradient(1px 1px at 52% 44%, rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(1px 1px at 93% 58%, rgba(255,255,255,.45), transparent 60%),
+      radial-gradient(1px 1px at 40% 6%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(circle at 50% 40%, rgba(255,150,60,.10), transparent 42%),
+      radial-gradient(ellipse at 50% 0%, rgba(120,20,40,.35), transparent 55%),
+      var(--bg); }
   .screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
   .hidden { display: none !important; }
-  button { font: inherit; color: var(--text); background: var(--btn); border: 0; border-radius: 12px;
+
+  button { font: inherit; color: var(--ink); background: var(--btn); border: 1px solid var(--line); border-radius: 12px;
     padding: 10px 12px; touch-action: manipulation; user-select: none; -webkit-user-select: none; cursor: pointer; }
-  button:active:not(:disabled) { background: var(--btn-on); transform: translateY(1px); }
-  button:disabled { background: var(--btn-dis); color: #6e6690; cursor: default; }
-  button.big { font-size: 20px; padding: 16px; background: var(--gold); color: #2a1e00; font-weight: 700; }
-  button.big:active { background: #e6b84a; }
-  .ph { border: 2px dashed var(--muted); color: var(--muted); border-radius: 10px; font-size: 11px;
-    display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; line-height: 1.25; }
+  button:active:not(:disabled) { filter: brightness(1.25); transform: translateY(1px); }
+  button:disabled { opacity: .32; cursor: default; }
+  button.big { font-family: var(--f-disp); font-size: 21px; font-weight: 900; letter-spacing: 3px; padding: 15px;
+    background: linear-gradient(180deg, #ffd166, #e8991c); color: #2a1a00; border: 0; border-radius: 999px;
+    box-shadow: 0 6px 24px rgba(255,170,40,.28); }
+  button.ghost { background: transparent; color: var(--muted); border-color: transparent; }
 
   /* ---------- 開始畫面 ---------- */
-  #s-start { padding: 24px 20px calc(20px + env(safe-area-inset-bottom)); gap: 14px; overflow-y: auto;
-    background: radial-gradient(circle at 50% 20%, #3b2d6b 0, var(--bg) 60%); }
-  #s-start .logo { width: 120px; height: 120px; margin: 8px auto 0; }
-  #s-start h1 { margin: 0; text-align: center; font-size: 30px; letter-spacing: 2px; }
-  #s-start .sub { margin: -6px 0 0; text-align: center; color: var(--muted); }
-  .story { background: rgba(0,0,0,.25); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.6; }
-  .howto { margin: 0; padding: 0 0 0 4px; list-style: none; font-size: 14px; line-height: 1.6; }
-  .howto li::before { content: "▸ "; color: var(--gold); }
-  .k { display: inline-block; padding: 0 6px; border-radius: 6px; font-size: 12px; margin: 0 2px; }
-  .k.p { background: var(--player); color: #2a1e00; }
-  .k.b { background: var(--boss); }
-  .k.n { background: var(--neutral); color: #3a2c10; }
-  .k.x { background: var(--nox); color: #04333a; }
-  #s-start .spacer { flex: 1; }
+  #s-start { align-items: center; padding: 10px 24px calc(18px + env(safe-area-inset-bottom)); gap: 0; overflow-y: auto; }
+  #s-start .hero { width: min(62vw, 250px); height: min(62vw, 250px); margin: 2vh 0 0; }
+  #s-start .hero svg { width: 100%; height: 100%; animation: spin 90s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #s-start h1 { font-family: var(--f-disp); font-size: 40px; font-weight: 900; letter-spacing: 8px; margin: 10px 0 0; text-indent: 8px;
+    color: var(--gold); text-shadow: 0 0 30px rgba(255,190,70,.35); }
+  #s-start .tag { margin: 2px 0 0; font-size: 12px; letter-spacing: 3px; color: var(--muted); }
+  #s-start .story { margin: 18px 0 0; text-align: center; font-size: 14px; line-height: 1.8; color: #cdc3e0; }
+  #s-start .story em { font-style: normal; color: var(--ink); }
+  .rules { list-style: none; margin: 16px 0 0; padding: 0; width: 100%; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); }
+  .rules li { display: flex; align-items: center; gap: 10px; }
+  .sw { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #6b4620; }
+  .sw.p { background: radial-gradient(#ffcf5e, #f08f17); } .sw.b { background: radial-gradient(#8a2626, #3f0f0f); } .sw.n { background: radial-gradient(#f6e2b4, #e2c48a); }
+  .sw.x { background: transparent; border-color: var(--cyan); box-shadow: inset 0 0 8px rgba(95,227,232,.5); }
+  #s-start .spacer { flex: 1; min-height: 14px; }
+  #s-start .keys { margin-top: 10px; font-size: 10px; letter-spacing: 1px; color: var(--dim); }
 
   /* ---------- 遊戲畫面 ---------- */
-  #s-game { background: linear-gradient(180deg, #24193f 0, var(--bg) 40%); }
-  .hud { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; font-size: 14px;
-    background: rgba(0,0,0,.25); padding-top: calc(8px + env(safe-area-inset-top)); }
-  .hud b { color: var(--gold); font-size: 16px; }
-  .hud .time { font-variant-numeric: tabular-nums; font-size: 16px; }
-  .hud .nox b { color: var(--nox); }
-  .hud button { padding: 4px 10px; font-size: 13px; }
+  .hud { display: flex; align-items: flex-end; gap: 14px; padding: calc(8px + env(safe-area-inset-top)) 14px 4px; }
+  .hud .cell { display: flex; flex-direction: column; line-height: 1; }
+  .hud .cell i { font-style: normal; font-size: 9px; letter-spacing: 2px; color: var(--dim); margin-bottom: 4px; }
+  .hud .cell b { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .hud .cell b small { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .hud .money b { color: var(--gold); } .hud .nox b { color: var(--cyan); }
+  .hud .sp { flex: 1; }
+  .hud button { padding: 3px 9px; font-size: 12px; border-radius: 8px; color: var(--muted); }
 
-  .stage { flex: 1; min-height: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 48px 8px 6px; }
-  @media (max-height: 720px) {
-    .stage { padding: 38px 8px 4px; }
-    .boss-ph, .nox-ph, .player-ph { height: 30px; font-size: 10px; }
-    .boss-ph { width: 96px; }
-    .hint { min-height: 16px; }
-  }
-  .stage svg { height: 100%; width: 100%; max-height: 100%; display: block; }
-  .boss-ph { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 104px; height: 40px; border-color: #d9736a; color: #f0a49c; }
-  .nox-ph { position: absolute; top: 4px; right: 8px; width: 82px; height: 40px; border-color: var(--nox); color: var(--nox); }
-  .player-ph { position: absolute; bottom: 4px; left: 8px; width: 82px; height: 40px; border-color: var(--gold); color: var(--gold); }
-  .west-tag { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--muted); writing-mode: vertical-rl; letter-spacing: 3px; }
+  .stage { flex: 1; min-height: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 46px 10px 4px; }
+  .stage svg { height: 100%; width: 100%; display: block; filter: drop-shadow(0 14px 30px rgba(0,0,0,.6)); }
+  .slot { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    font-size: 10px; letter-spacing: 2px; pointer-events: none; }
+  .slot small { font-size: 8px; letter-spacing: 0; opacity: .55; }
+  .slot-boss { top: 0; left: 50%; transform: translateX(-50%); width: 170px; height: 50px; color: rgba(255,110,100,.55);
+    background: radial-gradient(ellipse at 50% 55%, rgba(140,15,30,.6), transparent 68%); }
+  .slot-nox { top: 6px; right: 12px; width: 50px; height: 42px; border-radius: 8px; color: rgba(95,227,232,.6);
+    border: 1px solid rgba(95,227,232,.3); background: repeating-linear-gradient(90deg, transparent 0 8px, rgba(95,227,232,.14) 8px 9px); }
+  .slot-cat { bottom: 6px; left: 12px; width: 50px; height: 50px; border-radius: 50%; color: rgba(255,191,71,.6); border: 1px dashed rgba(255,191,71,.3); }
 
-  .timer { height: 6px; background: rgba(255,255,255,.08); margin: 0 12px; border-radius: 3px; overflow: hidden; }
-  .timer > div { height: 100%; width: 0; background: var(--gold); }
-  .log { height: 22px; line-height: 22px; font-size: 12px; padding: 0 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .log.player { color: var(--gold); } .log.boss { color: var(--danger); } .log.nox { color: var(--nox); }
+  .log { height: 20px; line-height: 20px; font-size: 11.5px; padding: 0 16px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .3px; }
+  .log::before { content: "· "; }
+  .log.player { color: var(--gold); } .log.boss { color: var(--red); } .log.nox { color: var(--cyan); }
 
-  .panel { background: var(--panel); border-radius: 18px 18px 0 0; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 8px; }
-  .slice-info { display: flex; gap: 8px; align-items: center; font-size: 14px; flex-wrap: wrap; }
-  .slice-info .hour { font-size: 18px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
-  .tag { padding: 2px 8px; border-radius: 999px; font-size: 12px; }
-  .tag.player { background: var(--player); color: #2a1e00; }
-  .tag.boss { background: var(--boss); }
-  .tag.none { background: var(--neutral); color: #3a2c10; }
-  .tag.spicy { background: #7a1f1f; color: #ffb3b3; }
-  .tag.sweet { background: #7a5a1f; color: #ffe2a8; }
-  .hint { font-size: 12px; color: var(--muted); min-height: 32px; line-height: 16px; }
-  .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .actions button { min-height: 52px; font-size: 14px; line-height: 1.2; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
-  .actions button small { font-size: 11px; opacity: .8; }
-  .actions button.nox { background: #1f5b63; }
-  .actions button.nox:active:not(:disabled) { background: #2a7b86; }
-  .actions button.gold { background: #6b5320; }
-  .actions button.gold:active:not(:disabled) { background: #8a6b2a; }
+  .panel { background: linear-gradient(180deg, rgba(17,14,27,0), var(--panel) 18px); border-top: 1px solid rgba(255,191,71,.12);
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 8px; }
+  .focus { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 12px; align-items: center; }
+  .focus .hour { grid-row: 1 / 3; font-family: var(--f-disp); font-size: 30px; font-weight: 900; color: var(--gold); font-variant-numeric: tabular-nums; line-height: 1; }
+  .focus .meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .chip { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+  .chip.player { color: #2a1a00; background: var(--gold); border-color: transparent; font-weight: 700; }
+  .chip.boss { color: #ffd3cf; background: #5c1a1a; border-color: transparent; }
+  .chip.none { color: #3a2c10; background: #e2c48a; border-color: transparent; }
+  .chip.spicy { color: var(--red); border-color: rgba(255,90,78,.4); }
+  .chip.sweet { color: var(--gold); border-color: rgba(255,191,71,.4); }
+  .focus .hint { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .actions button { min-height: 50px; padding: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-radius: 10px; }
+  .actions .lbl { font-size: 14px; font-weight: 700; letter-spacing: 1px; }
+  .actions .cost { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .actions .b-gold { border-color: rgba(255,191,71,.35); } .actions .b-gold .cost { color: var(--gold); }
+  .actions .b-cyan { border-color: rgba(95,227,232,.35); } .actions .b-cyan .lbl { color: var(--cyan); }
 
-  /* ---------- 覆蓋層 / 結算 ---------- */
-  .overlay { position: absolute; inset: 0; background: rgba(10,6,24,.86); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10; }
-  .card { background: var(--panel); border-radius: 18px; padding: 20px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 12px; }
-  .card h2 { margin: 0; font-size: 22px; text-align: center; }
-  .card .grid { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; font-size: 14px; }
-  .card .grid b { text-align: right; font-variant-numeric: tabular-nums; }
-  .card .quote { font-size: 13px; color: var(--nox); border-left: 3px solid var(--nox); padding-left: 10px; line-height: 1.5; }
-  .card .countdown { font-size: 12px; color: var(--muted); text-align: center; }
-  #s-result { background: radial-gradient(circle at 50% 30%, #3b2d6b 0, var(--bg) 60%); align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
-  #s-result .card { max-width: 400px; }
+  /* ---------- 覆蓋層 / 結局 ---------- */
+  .overlay { position: absolute; inset: 0; background: rgba(6,4,14,.82); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10; }
+  .card { background: #15111f; border: 1px solid rgba(255,191,71,.22); border-radius: 18px; padding: 22px 20px; width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 14px; }
+  .card h2 { margin: 0; font-family: var(--f-disp); font-size: 22px; font-weight: 900; letter-spacing: 3px; text-align: center; color: var(--gold); }
+  .card .grid { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; font-size: 13px; color: var(--muted); }
+  .card .grid b { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .card .quote { font-size: 13px; color: var(--cyan); border-left: 2px solid var(--cyan); padding-left: 10px; line-height: 1.6; }
+  .card .countdown { font-size: 11px; color: var(--dim); text-align: center; letter-spacing: 1px; }
+  #s-result { align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
   .happy { text-align: center; }
-  .happy .num { font-size: 44px; font-weight: 800; color: var(--gold); line-height: 1; }
-  .happy .lbl { font-size: 12px; color: var(--muted); }
-  .verdict { text-align: center; font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .happy .num { font-family: var(--f-disp); font-size: 56px; font-weight: 900; color: var(--gold); line-height: 1; text-shadow: 0 0 30px rgba(255,190,70,.35); }
+  .happy .lbl { font-size: 10px; letter-spacing: 4px; color: var(--muted); margin-top: 6px; }
+  .verdict { text-align: center; font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-  /* ---------- SVG ---------- */
-  #pizza { transform-origin: 0 0; transition: transform .45s ease-in-out; }
-  .slice { stroke: #4a3416; stroke-width: 1.2; }
-  .slice.none { fill: var(--neutral); }
-  .slice.player { fill: var(--player); }
-  .slice.boss { fill: var(--boss); }
-  .sweet { fill: #ff7fa6; stroke: #7a1e3a; stroke-width: .8; }
-  .spicy { fill: #ff3b1f; stroke: #5a0d0d; stroke-width: .8; }
-  .lbl text { text-anchor: middle; pointer-events: none; fill: #2a1e00; }
-  .lbl .hr { font-size: 6.5px; opacity: .75; }
-  .lbl .val { font-size: 9px; font-weight: 800; }
-  .lbl.boss text { fill: #ffe0dc; }
-  .lbl.none text { fill: #6b5a3a; }
-  .lbl { transition: transform .45s ease-in-out; }
-  .marker-south { fill: none; stroke: var(--gold); stroke-width: 3; animation: pulse 1.2s ease-in-out infinite; }
-  .marker-north { fill: none; stroke: var(--boss); stroke-width: 2.5; stroke-dasharray: 4 3; }
-  .marker-west { fill: none; stroke: #8fa3c9; stroke-width: 1.5; stroke-dasharray: 2 3; }
-  .pointer { fill: var(--boss); }
-  .marker-text { font-size: 8px; fill: var(--muted); text-anchor: middle; }
-  @keyframes pulse { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .35; } }
+  /* ---------- SVG 披薩 ---------- */
+  .rot { transform-origin: 0 0; transition: transform .5s cubic-bezier(.4, 0, .2, 1); }
+  .crust { fill: #c98b3e; stroke: #7b4b1c; stroke-width: 3; }
+  .crust-in { fill: none; stroke: #9a6530; stroke-width: 1.6; }
+  .crust-hi { fill: none; stroke: rgba(255,240,200,.28); stroke-width: 2.5; }
+  .slice { stroke: rgba(110,70,25,.55); stroke-width: 1; }
+  .burn { pointer-events: none; }
+  .lbl { transition: transform .5s cubic-bezier(.4, 0, .2, 1); }
+  .lbl text { text-anchor: middle; pointer-events: none; }
+  .lbl .hr { font-size: 6.5px; font-weight: 700; fill: #3a2410; }
+  .lbl .val { font-size: 9px; font-weight: 900; fill: #fff; stroke: rgba(30,10,0,.85); stroke-width: 2.4px; paint-order: stroke; }
+  .shadow-n { fill: rgba(60,0,12,.42); stroke: rgba(255,90,78,.8); stroke-width: 1.2; stroke-dasharray: 3 3; }
+  .mark-s { fill: none; stroke: var(--gold); stroke-width: 2.4; }
+  .mark-s-glow { fill: none; stroke: rgba(255,191,71,.35); stroke-width: 7; }
+  .timer-arc { fill: none; stroke: var(--gold); stroke-width: 4; stroke-linecap: round; }
+  .timer-bg { fill: none; stroke: rgba(255,191,71,.18); stroke-width: 4; stroke-linecap: round; }
+  .mark-w { fill: none; stroke: rgba(143,180,255,.7); stroke-width: 2; stroke-dasharray: 1.5 3.5; stroke-linecap: round; }
+  .mark-text { font-size: 7px; letter-spacing: 1px; fill: rgba(200,210,240,.6); text-anchor: middle; }
+  .hand { fill: #f4ecd8; stroke: #1a1020; stroke-width: 1; }
+  .hub { fill: #2a1c10; stroke: #f4ecd8; stroke-width: 1.5; }
+  @media (max-height: 720px) {
+    .stage { padding-top: 40px; }
+    .slot-boss { height: 40px; } .slot-nox, .slot-cat { transform: scale(.85); transform-origin: top right; } .slot-cat { transform-origin: bottom left; }
+    .focus .hour { font-size: 26px; }
+    .actions button { min-height: 46px; }
+  }
 </style>
 </head>
 <body>
@@ -142,67 +153,56 @@
 
   <!-- ===== 開始畫面 ===== -->
   <section id="s-start" class="screen">
-    <div class="ph logo">LOGO<br>placeholder</div>
+    <div class="hero"><svg id="hero-svg" viewBox="-140 -140 280 280" aria-hidden="true"></svg></div>
     <h1>披薩時鐘</h1>
-    <p class="sub">一週的人生，12 片披薩，每片 2 小時。</p>
-    <div class="story">
-      披薩店被拋向太空，Nox 被關進牢籠。桌上的披薩開始旋轉、變成時鐘。<br>
-      魔王說：「來看看沒有我的話，你有什麼能耐吧。」<br>
-      你有 7 天。把生活拿回來。
-    </div>
-    <ul class="howto">
-      <li>披薩順時針轉。轉到<b>南方（你）</b>的那片才能操作，每片約 3 秒。</li>
-      <li>餅皮顏色 = 這段時間屬於誰：<span class="k p">你</span><span class="k b">魔王</span><span class="k n">無主</span></li>
-      <li>加<b>甜料</b>：自家餅皮增值賺錢；魔王餅皮被削弱；無主結算 2 次變成你的。</li>
-      <li>魔王會撒<b>辛辣</b>（加班、Gas 費…）。技術摩擦交給 <span class="k x">Nox</span> 免費處理，生活壓力得自己花錢。</li>
-      <li>7 天後結算：領地、價值、現金 → <b>幸福指數</b>。</li>
+    <p class="tag">一週的人生 · 十二片披薩</p>
+    <p class="story">披薩店被拋進太空，Nox 被關進牢籠。<br>魔王說：<em>「來看看沒有我的話，你有什麼能耐吧。」</em></p>
+    <ul class="rules">
+      <li><span class="sw n"></span><span>披薩順時針轉，轉到<b>南方金框</b>那片才能操作，每片約 3 秒。</span></li>
+      <li><span class="sw p"></span><span>加<b>甜料</b>把時間變成自己的；<span class="sw b" style="display:inline-block;width:12px;height:12px;vertical-align:-2px;border-width:1px"></span> 魔王餅皮會被削弱。</span></li>
+      <li><span class="sw x"></span><span>魔王撒<b>辣椒</b>：技術摩擦交給 <b>Nox</b> 免費處理，生活壓力得自己花錢。</span></li>
     </ul>
     <div class="spacer"></div>
     <button id="btn-start" class="big">開始這一週</button>
+    <div class="keys">桌機：1 2 3 甜料 · Q 餅皮 · W 處理 · E 賣出</div>
   </section>
 
   <!-- ===== 遊戲畫面 ===== -->
   <section id="s-game" class="screen hidden">
     <header class="hud">
-      <div>第 <b id="hud-day">1</b> 天</div>
-      <div class="time" id="hud-time">00:00</div>
-      <div>$<b id="hud-money">0</b></div>
-      <div class="nox">Nox ×<b id="hud-nox">3</b></div>
-      <button id="btn-pause">Ⅱ</button>
+      <div class="cell"><i>DAY</i><b><span id="hud-day">1</span><small>/7</small></b></div>
+      <div class="cell"><i>TIME</i><b id="hud-time">00:00</b></div>
+      <div class="cell money"><i>CASH</i><b>$<span id="hud-money">0</span></b></div>
+      <div class="cell nox"><i>NOX</i><b>×<span id="hud-nox">3</span></b></div>
+      <div class="sp"></div>
+      <button id="btn-pause" aria-label="暫停">Ⅱ</button>
     </header>
 
     <div class="stage">
-      <svg id="svg" viewBox="-132 -132 264 264" aria-label="披薩時鐘">
-        <g id="pizza"></g>
-        <g id="labels"></g>
-        <g id="markers"></g>
-      </svg>
-      <div class="ph boss-ph">魔王<br>placeholder</div>
-      <div class="ph nox-ph">Nox 牢籠<br>placeholder</div>
-      <div class="ph player-ph">主角<br>placeholder</div>
+      <svg id="svg" viewBox="-140 -140 280 280" aria-label="披薩時鐘"></svg>
+      <div class="slot slot-boss">魔王<small>placeholder</small></div>
+      <div class="slot slot-nox">Nox<small>牢籠</small></div>
+      <div class="slot slot-cat">主角<small>placeholder</small></div>
     </div>
 
-    <div class="timer"><div id="timer-fill"></div></div>
     <div id="log" class="log"></div>
 
     <div class="panel">
-      <div class="slice-info">
-        <span class="hour" id="si-hour">00:00</span>
-        <span class="tag none" id="si-owner">無主</span>
-        <span class="tag" id="si-top"></span>
+      <div class="focus">
+        <div class="hour" id="si-hour">00:00</div>
+        <div class="meta"><span class="chip none" id="si-owner">無主</span><span class="chip hidden" id="si-top"></span></div>
+        <div class="hint" id="hint"></div>
       </div>
-      <div class="hint" id="hint"></div>
       <div class="actions">
-        <button data-act="top1"><span>甜料 Lv1</span><small id="c-top1"></small></button>
-        <button data-act="top2"><span>甜料 Lv2</span><small id="c-top2"></small></button>
-        <button data-act="top3"><span>甜料 Lv3</span><small id="c-top3"></small></button>
-        <button data-act="crust" class="gold"><span id="l-crust">改造餅皮</span><small id="c-crust"></small></button>
-        <button data-act="clear" class="nox"><span id="l-clear">處理辛辣</span><small id="c-clear"></small></button>
-        <button data-act="sell"><span>賣出餅皮</span><small id="c-sell"></small></button>
+        <button data-act="top1"><span class="lbl">甜料 Ⅰ</span><span class="cost" id="c-top1"></span></button>
+        <button data-act="top2"><span class="lbl">甜料 Ⅱ</span><span class="cost" id="c-top2"></span></button>
+        <button data-act="top3"><span class="lbl">甜料 Ⅲ</span><span class="cost" id="c-top3"></span></button>
+        <button data-act="crust" class="b-gold"><span class="lbl" id="l-crust">改造餅皮</span><span class="cost" id="c-crust"></span></button>
+        <button data-act="clear" class="b-cyan"><span class="lbl" id="l-clear">處理辣椒</span><span class="cost" id="c-clear"></span></button>
+        <button data-act="sell"><span class="lbl">賣出</span><span class="cost" id="c-sell"></span></button>
       </div>
     </div>
 
-    <!-- 每日結算 -->
     <div id="s-dayend" class="overlay hidden">
       <div class="card">
         <h2>第 <span id="de-day">1</span> 天結束</h2>
@@ -219,12 +219,11 @@
       </div>
     </div>
 
-    <!-- 暫停 -->
     <div id="s-pause" class="overlay hidden">
       <div class="card">
         <h2>暫停</h2>
         <button id="btn-resume" class="big">繼續</button>
-        <button id="btn-quit">回到開始畫面</button>
+        <button id="btn-quit" class="ghost">回到開始畫面</button>
       </div>
     </div>
   </section>
@@ -254,71 +253,115 @@
   'use strict';
   var Core = window.PizzaCore, CFG = Core.CFG;
   var $ = function (id) { return document.getElementById(id); };
-  var SVG_NS = 'http://www.w3.org/2000/svg';
-  var R = 110;
+  var NS = 'http://www.w3.org/2000/svg';
+  var R = 112, R_CRUST = 126;
 
-  var g = null;              // game instance
-  var acc = 0, last = 0, raf = 0, paused = false, dayEndAt = 0;
+  var g = null, acc = 0, last = 0, tick = 0, paused = false, dayEndAt = 0, H = null;
 
-  // ---------- SVG 建構 ----------
+  // ---------- SVG 工具 ----------
   function pt(deg, r) { var a = deg * Math.PI / 180; return [r * Math.sin(a), -r * Math.cos(a)]; }
+  function f(n) { return n.toFixed(2); }
   function wedge(center, r) {
     var a = pt(center - 15, r), b = pt(center + 15, r);
-    return 'M0,0 L' + a[0].toFixed(2) + ',' + a[1].toFixed(2) + ' A' + r + ',' + r + ' 0 0 1 ' + b[0].toFixed(2) + ',' + b[1].toFixed(2) + ' Z';
+    return 'M0,0 L' + f(a[0]) + ',' + f(a[1]) + ' A' + r + ',' + r + ' 0 0 1 ' + f(b[0]) + ',' + f(b[1]) + ' Z';
+  }
+  function arc(center, r) {
+    var a = pt(center - 15, r), b = pt(center + 15, r);
+    return 'M' + f(a[0]) + ',' + f(a[1]) + ' A' + r + ',' + r + ' 0 0 1 ' + f(b[0]) + ',' + f(b[1]);
   }
   function el(name, attrs, parent) {
-    var e = document.createElementNS(SVG_NS, name);
+    var e = document.createElementNS(NS, name);
     for (var k in attrs) e.setAttribute(k, attrs[k]);
     if (parent) parent.appendChild(e);
     return e;
   }
-
-  var sliceEls = [], topEls = [], lblEls = [];
-  function buildSvg() {
-    var pizza = $('pizza'), labels = $('labels'), markers = $('markers');
-    pizza.innerHTML = ''; labels.innerHTML = ''; markers.innerHTML = '';
-    sliceEls = []; topEls = []; lblEls = [];
-    for (var i = 0; i < 12; i++) {
-      var ang = -i * 30; // 第 i 片的靜態角度（逆時針排列，順時針旋轉後依序到北方）
-      sliceEls.push(el('path', { d: wedge(ang, R), 'class': 'slice none' }, pizza));
-      topEls.push(el('g', {}, pizza));
-      var lg = el('g', { 'class': 'lbl none' }, labels);
-      var th = el('text', { x: 0, y: -2, 'class': 'hr' }, lg); th.textContent = g ? g.hh(i) : '';
-      var tv = el('text', { x: 0, y: 8, 'class': 'val' }, lg); tv.textContent = '';
-      lblEls.push(lg);
-    }
-    // 靜態標記：北（魔王）、南（玩家）、西（結算）
-    el('path', { d: wedge(0, R + 4), 'class': 'marker-north' }, markers);
-    el('path', { d: wedge(180, R + 4), 'class': 'marker-south' }, markers);
-    el('path', { d: wedge(270, R + 4), 'class': 'marker-west' }, markers);
-    el('path', { d: 'M-7,-130 L7,-130 L0,-119 Z', 'class': 'pointer' }, markers);
-    var t1 = el('text', { x: 0, y: 126, 'class': 'marker-text' }, markers); t1.textContent = '▲ 你的操作區';
-    var t2 = el('text', { x: 0, y: 0, 'class': 'marker-text', transform: 'translate(-120,0) rotate(-90)' }, markers); t2.textContent = '結算';
+  function grad(defs, id, c0, c1) {
+    var gr = el('radialGradient', { id: id, cx: 0, cy: 0, r: R, gradientUnits: 'userSpaceOnUse' }, defs);
+    el('stop', { offset: '0', 'stop-color': c0 }, gr);
+    el('stop', { offset: '1', 'stop-color': c1 }, gr);
+  }
+  function cherry(parent, x, y) {
+    var c = el('g', { transform: 'translate(' + f(x) + ',' + f(y) + ')' }, parent);
+    el('path', { d: 'M0,-5.5 C1.5,-8 3,-9 5,-9.5', fill: 'none', stroke: '#4d8c2e', 'stroke-width': 1.4, 'stroke-linecap': 'round' }, c);
+    el('circle', { r: 5.2, fill: '#e3344d', stroke: '#7a1424', 'stroke-width': .7 }, c);
+    el('circle', { cx: -1.8, cy: -1.8, r: 1.5, fill: '#fff', opacity: .85 }, c);
+  }
+  function chili(parent, x, y, deg) {
+    var c = el('g', { transform: 'translate(' + f(x) + ',' + f(y) + ') rotate(' + f(deg) + ')' }, parent);
+    el('path', { d: 'M-7,-3 C-8,3 -2,8 4,6.5 C8.5,5 9.5,0 6.5,-2.5 C3.5,-5 -2,-4.5 -7,-3 Z', fill: '#ee3d1f', stroke: '#6f1608', 'stroke-width': .8 }, c);
+    el('path', { d: 'M-7,-3 C-8.5,-5 -10,-5.5 -11,-7', fill: 'none', stroke: '#3f7a2a', 'stroke-width': 1.6, 'stroke-linecap': 'round' }, c);
+    el('path', { d: 'M-3,-1 C0,1 3,2 5,1', fill: 'none', stroke: 'rgba(255,255,255,.45)', 'stroke-width': 1 }, c);
   }
 
-  function renderSlices() {
-    var S = g.S;
+  // 建立一張披薩；回傳各層 handle
+  function buildPizza(svg, withMarkers, uid) {
+    svg.innerHTML = '';
+    var defs = el('defs', {}, svg);
+    // 每張披薩的漸層 id 要不同：藏在 display:none 裡的漸層會讓另一張披薩填不到色
+    grad(defs, uid + '-none', '#f7e4b8', '#dfbf82');
+    grad(defs, uid + '-player', '#ffd267', '#ee8c14');
+    grad(defs, uid + '-boss', '#8f2a2a', '#3a0d0d');
+    var pat = el('pattern', { id: uid + '-burn', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)' }, defs);
+    el('rect', { width: 2.2, height: 7, fill: 'rgba(0,0,0,.22)' }, pat);
+
+    var rot = el('g', { 'class': 'rot' }, svg);
+    el('circle', { r: R_CRUST, 'class': 'crust' }, rot);
+    var h = { uid: uid, rot: rot, slices: [], burns: [], tops: [], lbls: [] };
+    var i;
+    for (i = 0; i < 12; i++) h.slices.push(el('path', { d: wedge(-i * 30, R), 'class': 'slice', fill: 'url(#' + uid + '-none)' }, rot));
+    for (i = 0; i < 12; i++) h.burns.push(el('path', { d: wedge(-i * 30, R), 'class': 'burn hidden', fill: 'url(#' + uid + '-burn)' }, rot));
+    for (i = 0; i < 12; i++) h.tops.push(el('g', {}, rot));
+    el('circle', { r: R + 1, 'class': 'crust-in' }, rot);
+    el('circle', { r: R_CRUST - 5, 'class': 'crust-hi' }, rot);
+
+    var labels = el('g', {}, svg);
+    for (i = 0; i < 12; i++) {
+      var lg = el('g', { 'class': 'lbl' }, labels);
+      var th = el('text', { x: 0, y: 2.3, 'class': 'hr' }, lg); th.textContent = String(Core.CFG ? (i * 2) % 24 : i);
+      var tv = el('text', { x: 0, y: 3, 'class': 'val' }, lg);
+      h.lbls.push({ g: lg, hr: th, val: tv });
+    }
+
+    if (withMarkers) {
+      var m = el('g', {}, svg);
+      el('path', { d: wedge(0, R_CRUST + 1), 'class': 'shadow-n' }, m);
+      el('path', { d: arc(270, R_CRUST + 8), 'class': 'mark-w' }, m);
+      var tw1 = el('text', { 'class': 'mark-text', x: -137, y: -2 }, m); tw1.textContent = '結';
+      var tw2 = el('text', { 'class': 'mark-text', x: -137, y: 7 }, m); tw2.textContent = '算';
+      el('path', { d: wedge(180, R_CRUST + 1), 'class': 'mark-s-glow' }, m);
+      el('path', { d: wedge(180, R_CRUST + 1), 'class': 'mark-s' }, m);
+      el('path', { d: arc(180, R_CRUST + 8), 'class': 'timer-bg' }, m);
+      h.timer = el('path', { d: arc(180, R_CRUST + 8), 'class': 'timer-arc' }, m);
+      h.timerLen = (R_CRUST + 8) * Math.PI / 6;
+      h.timer.setAttribute('stroke-dasharray', h.timerLen + ' ' + h.timerLen);
+      el('path', { d: 'M-3,8 L0,-104 L3,8 Z', 'class': 'hand' }, m);
+      el('circle', { r: 5.5, 'class': 'hub' }, m);
+    }
+    return h;
+  }
+
+  function renderPizza(h, S) {
+    h.rot.style.transform = 'rotate(' + S.rot + 'deg)';
     for (var i = 0; i < 12; i++) {
-      var sl = S.slices[i];
-      sliceEls[i].setAttribute('class', 'slice ' + sl.owner);
-      var tg = topEls[i]; tg.innerHTML = '';
+      var sl = S.slices[i], ang = -i * 30;
+      h.slices[i].setAttribute('fill', 'url(#' + h.uid + '-' + sl.owner + ')');
+      h.burns[i].classList.toggle('hidden', sl.owner !== 'boss');
+      var tg = h.tops[i]; tg.innerHTML = '';
       if (sl.topping) {
-        var n = sl.topping.tier, ang = -i * 30;
-        for (var k = 0; k < n; k++) {
-          var rr = 52 + k * 16, p = pt(ang, rr);
-          if (sl.topping.side === 'player') el('circle', { cx: p[0], cy: p[1], r: 5, 'class': 'sweet' }, tg);
-          else el('path', { d: 'M' + p[0] + ',' + (p[1] - 6) + ' l6,11 l-12,0 z', 'class': 'spicy' }, tg);
+        for (var k = 0; k < sl.topping.tier; k++) {
+          var jitter = (k % 2 ? -7 : 7), p = pt(ang + jitter, 46 + k * 19);
+          if (sl.topping.side === 'player') cherry(tg, p[0], p[1]);
+          else chili(tg, p[0], p[1], ang + 25 * (k % 2 ? 1 : -1));
         }
       }
-      // 標籤：不隨披薩旋轉，位置依目前角度計算
-      var cur = (S.rot + ( -i * 30)) % 360; // 目前螢幕角度
-      var lp = pt(cur, 96);
-      lblEls[i].style.transform = 'translate(' + lp[0].toFixed(1) + 'px,' + lp[1].toFixed(1) + 'px)';
-      lblEls[i].setAttribute('class', 'lbl ' + sl.owner);
-      lblEls[i].lastChild.textContent = sl.owner === 'none' ? '' : String(sl.value);
+      var cur = S.rot + ang, L = h.lbls[i];
+      var hp = pt(cur, R_CRUST - 6), vp = pt(cur, 99);
+      L.g.style.transform = 'translate(0px,0px)';
+      L.hr.setAttribute('transform', 'translate(' + f(hp[0]) + ',' + f(hp[1]) + ')');
+      L.val.setAttribute('transform', 'translate(' + f(vp[0]) + ',' + f(vp[1]) + ')');
+      L.val.textContent = sl.owner === 'none' ? '' : String(sl.value);
     }
   }
-  function renderRotation() { $('pizza').style.transform = 'rotate(' + g.S.rot + 'deg)'; }
 
   // ---------- HUD / 面板 ----------
   function renderHud() {
@@ -328,92 +371,71 @@
     $('hud-money').textContent = S.money;
     $('hud-nox').textContent = S.nox;
   }
-
-  function ownerName(o) { return o === 'player' ? '你的餅皮' : o === 'boss' ? '魔王餅皮' : '無主'; }
+  function ownerName(o) { return o === 'player' ? '你的' : o === 'boss' ? '魔王' : '無主'; }
   function hintFor(sl) {
     var top = sl.topping;
-    if (top && top.side === 'boss') {
-      return top.kind === 'tech'
-        ? '技術摩擦：Nox 可以免費幫你處理（每天 ' + CFG.NOX_CHARGES + ' 次）。放著不管會侵蝕餅皮、扣錢。'
-        : '生活壓力：Nox 幫不上忙，得自己花 $' + CFG.LIFE_CLEAR_COST + ' 處理，或先忍一忍。';
-    }
-    if (sl.owner === 'boss') return '魔王的時間。加甜料每天削弱它的價值（歸零後回到無主），或直接付錢改造餅皮奪回。';
-    if (sl.owner === 'none') return '還沒有固定生活模式。加甜料結算 ' + CFG.CONVERT_STEPS + ' 次會變成你的領地；改造餅皮則立刻取得。';
-    if (top) return '自家餅皮 + 甜料：每天賺 $' + CFG.TOPPING[top.tier].income + '、價值 +' + (CFG.TOPPING[top.tier].growth + CFG.CRUST_GROWTH) + '。可升級甜料或強化餅皮。';
-    return '你的時間。加甜料讓它增值並帶來收入；沒有甜料時只會慢慢增值。';
+    if (top && top.side === 'boss') return top.kind === 'tech' ? '技術摩擦，Nox 可以免費處理' : '生活壓力，Nox 幫不上，得自己花錢';
+    if (sl.owner === 'boss') return '甜料每天削弱它，或付錢直接奪回';
+    if (sl.owner === 'none') return '甜料結算兩次歸你，改造餅皮立刻歸你';
+    if (top) return '自家餅皮加甜料：賺錢又增值';
+    return '你的時間，加甜料才會賺錢';
   }
-
+  function btn(act) { return document.querySelector('.actions button[data-act="' + act + '"]'); }
   function renderPanel() {
     var S = g.S, sl = g.southSlice(), top = sl.topping;
     $('si-hour').textContent = g.hh(sl.i);
     var so = $('si-owner');
-    so.textContent = ownerName(sl.owner) + (sl.owner !== 'none' ? ' ' + sl.value : '');
-    so.className = 'tag ' + sl.owner;
+    so.textContent = ownerName(sl.owner) + (sl.owner !== 'none' ? ' · ' + sl.value : '');
+    so.className = 'chip ' + sl.owner;
     var st = $('si-top');
-    if (!top) { st.textContent = ''; st.className = 'tag hidden'; }
-    else if (top.side === 'boss') { st.textContent = '辣：' + top.label + ' Lv' + top.tier; st.className = 'tag spicy'; }
-    else { st.textContent = '甜：' + CFG.TOPPING[top.tier].name + ' Lv' + top.tier; st.className = 'tag sweet'; }
+    if (!top) st.className = 'chip hidden';
+    else if (top.side === 'boss') { st.textContent = '辣椒 ' + top.label; st.className = 'chip spicy'; }
+    else { st.textContent = '甜料 ' + CFG.TOPPING[top.tier].name; st.className = 'chip sweet'; }
     $('hint').textContent = hintFor(sl);
 
-    for (var t = 1; t <= 3; t++) {
-      var b = btn('top' + t);
-      b.disabled = !g.canTopping(t);
-      $('c-top' + t).textContent = '$' + CFG.TOPPING[t].cost + ' ' + CFG.TOPPING[t].name;
-    }
-    var bc = btn('crust');
-    bc.disabled = !g.canCrust();
+    for (var t = 1; t <= 3; t++) { btn('top' + t).disabled = !g.canTopping(t); $('c-top' + t).textContent = '$' + CFG.TOPPING[t].cost; }
+    btn('crust').disabled = !g.canCrust();
     $('l-crust').textContent = sl.owner === 'player' ? '強化餅皮' : sl.owner === 'boss' ? '奪回餅皮' : '改造餅皮';
-    $('c-crust').textContent = '$' + g.costCrust(sl) + (sl.owner === 'player' ? ' 價值+' + CFG.CRUST_UPGRADE_VALUE : '');
+    $('c-crust').textContent = '$' + g.costCrust(sl);
 
     var ci = g.clearInfo(), bl = btn('clear');
-    if (!top || top.side !== 'boss') { $('l-clear').textContent = '處理辛辣'; $('c-clear').textContent = '這片沒有辛辣'; bl.disabled = true; }
-    else if (top.kind === 'tech') { $('l-clear').textContent = 'Nox 處理'; $('c-clear').textContent = ci.ok ? '免費（剩 ' + S.nox + ' 次）' : '今天次數用完'; bl.disabled = !ci.ok; }
-    else { $('l-clear').textContent = '自己處理'; $('c-clear').textContent = '$' + CFG.LIFE_CLEAR_COST + '（Nox 幫不上）'; bl.disabled = !ci.ok; }
+    if (!top || top.side !== 'boss') { $('l-clear').textContent = '處理辣椒'; $('c-clear').textContent = '—'; bl.disabled = true; }
+    else if (top.kind === 'tech') { $('l-clear').textContent = 'Nox 處理'; $('c-clear').textContent = ci.ok ? '免費 · 剩 ' + S.nox : '今天用完'; bl.disabled = !ci.ok; }
+    else { $('l-clear').textContent = '自己處理'; $('c-clear').textContent = '$' + CFG.LIFE_CLEAR_COST; bl.disabled = !ci.ok; }
 
-    var bs = btn('sell');
-    bs.disabled = !g.canSell();
-    $('c-sell').textContent = sl.owner === 'player' ? '+$' + sl.value : '不是你的餅皮';
+    btn('sell').disabled = !g.canSell();
+    $('c-sell').textContent = sl.owner === 'player' ? '+$' + sl.value : '—';
   }
-  function btn(act) { return document.querySelector('.actions button[data-act="' + act + '"]'); }
-
   var lastLogLen = 0;
   function renderLog() {
-    var L = g.S.log;
-    if (!L.length) return;
-    var e = L[L.length - 1];
-    if (L.length !== lastLogLen) { lastLogLen = L.length; $('log').textContent = e.text; $('log').className = 'log ' + e.side; }
+    var L = g.S.log; if (!L.length) return;
+    if (L.length !== lastLogLen) { lastLogLen = L.length; var e = L[L.length - 1]; $('log').textContent = e.text; $('log').className = 'log ' + e.side; }
   }
-
-  function renderAll() { renderRotation(); renderSlices(); renderHud(); renderPanel(); renderLog(); }
+  function renderAll() { renderPizza(H, g.S); renderHud(); renderPanel(); renderLog(); }
 
   // ---------- 流程 ----------
-  function show(id) {
-    ['s-start', 's-game', 's-result'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); });
-  }
+  function show(id) { ['s-start', 's-game', 's-result'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); }); }
 
   function startGame() {
     g = Core.createGame();
     acc = 0; last = 0; paused = false; lastLogLen = 0;
-    $('pizza').style.transition = 'none';
-    buildSvg();
+    H = buildPizza($('svg'), true, 'game');
+    H.rot.style.transition = 'none';
     renderAll();
-    $('s-dayend').classList.add('hidden');
-    $('s-pause').classList.add('hidden');
+    $('s-dayend').classList.add('hidden'); $('s-pause').classList.add('hidden');
     show('s-game');
-    setTimeout(function () { $('pizza').style.transition = ''; }, 50);
-    clearInterval(raf);
-    raf = setInterval(loop, 33);
+    setTimeout(function () { H.rot.style.transition = ''; }, 60);
+    clearInterval(tick); tick = setInterval(loop, 33);
   }
 
   function loop() {
-    var ts = performance.now();
-    if (!last) last = ts;
+    var ts = performance.now(); if (!last) last = ts;
     var dt = Math.min(ts - last, 250); last = ts;
     if (paused) return;
     var S = g.S;
     if (S.phase === 'play') {
       acc += dt;
-      $('timer-fill').style.width = Math.min(100, 100 * acc / CFG.STEP_MS) + '%';
+      H.timer.setAttribute('stroke-dashoffset', String(H.timerLen * Math.min(1, acc / CFG.STEP_MS)));
       if (acc >= CFG.STEP_MS) {
         acc -= CFG.STEP_MS;
         var r = g.nextStep();
@@ -430,33 +452,29 @@
   function openDayEnd() {
     var d = g.S.daySummary;
     $('de-day').textContent = d.day;
-    $('de-ps').textContent = d.playerSlices + ' 片（價值 ' + d.playerValue + '）';
+    $('de-ps').textContent = d.playerSlices + ' 片';
     $('de-bs').textContent = d.bossSlices + ' 片';
     $('de-pv').textContent = d.playerValue;
     $('de-money').textContent = '$' + d.money;
     $('de-income').textContent = d.day >= CFG.DAYS ? '—' : '+$' + CFG.DAILY_INCOME;
     $('de-nox').textContent = 'Nox：' + d.noxLine;
-    $('btn-continue').textContent = d.day >= CFG.DAYS ? '看結果' : '進入第 ' + (d.day + 1) + ' 天';
+    $('btn-continue').textContent = d.day >= CFG.DAYS ? '看結果' : '第 ' + (d.day + 1) + ' 天';
     dayEndAt = performance.now() + CFG.DAY_END_MS;
     $('s-dayend').classList.remove('hidden');
   }
-
   function continueDay() {
     g.continueDay();
     $('s-dayend').classList.add('hidden');
     if (g.S.phase === 'result') { showResult(); return; }
-    acc = 0;
-    renderAll();
+    acc = 0; renderAll();
   }
-
   function showResult() {
-    var r = g.S.result;
-    clearInterval(raf);
-    var titles = { great: '你把一週拿回來了', win: '生活開始站在你這邊', lose: '魔王仍然掌控你的一週' };
+    var r = g.S.result; clearInterval(tick);
+    var titles = { great: '你把一週拿回來了', win: '生活開始站在你這邊', lose: '魔王仍掌控你的一週' };
     var verdicts = {
       great: '大部分時間都變成你自己的生活方式。魔王沒有消失，但他已經無法決定你怎麼過一天。',
       win: '你的領地比魔王多。摩擦交給 Nox，剩下的選擇你自己做了。下週再多拿回幾片吧。',
-      lose: '你的時間大多還被外在壓力支配。錢不是萬能，但先把技術摩擦交出去，把時間留給自己。'
+      lose: '你的時間大多還被外在壓力支配。先把技術摩擦交出去，把時間留給自己。'
     };
     $('r-title').textContent = titles[r.verdict];
     $('r-happy').textContent = r.happiness;
@@ -473,39 +491,45 @@
   document.querySelector('.actions').addEventListener('click', function (ev) {
     var b = ev.target.closest('button'); if (!b || b.disabled || !g || g.S.phase !== 'play') return;
     var act = b.getAttribute('data-act'), ok = false;
-    if (act === 'top1') ok = g.addTopping(1);
-    else if (act === 'top2') ok = g.addTopping(2);
-    else if (act === 'top3') ok = g.addTopping(3);
-    else if (act === 'crust') ok = g.buildCrust();
-    else if (act === 'clear') ok = g.clearSpicy();
-    else if (act === 'sell') ok = g.sellCrust();
-    if (ok) { renderSlices(); renderHud(); renderPanel(); renderLog(); }
+    if (act === 'top1') ok = g.addTopping(1); else if (act === 'top2') ok = g.addTopping(2); else if (act === 'top3') ok = g.addTopping(3);
+    else if (act === 'crust') ok = g.buildCrust(); else if (act === 'clear') ok = g.clearSpicy(); else if (act === 'sell') ok = g.sellCrust();
+    if (ok) { renderPizza(H, g.S); renderHud(); renderPanel(); renderLog(); }
   });
   $('btn-start').addEventListener('click', startGame);
   $('btn-again').addEventListener('click', startGame);
   $('btn-continue').addEventListener('click', continueDay);
   $('btn-pause').addEventListener('click', function () { if (g && g.S.phase === 'play') { paused = true; $('s-pause').classList.remove('hidden'); } });
   $('btn-resume').addEventListener('click', function () { paused = false; last = 0; $('s-pause').classList.add('hidden'); });
-  $('btn-quit').addEventListener('click', function () { clearInterval(raf); $('s-pause').classList.add('hidden'); show('s-start'); });
+  $('btn-quit').addEventListener('click', function () { clearInterval(tick); $('s-pause').classList.add('hidden'); show('s-start'); });
   document.addEventListener('visibilitychange', function () {
     if (document.hidden && g && g.S.phase === 'play') { paused = true; $('s-pause').classList.remove('hidden'); }
   });
-  // 鍵盤快捷鍵（桌機）：1/2/3 甜料、Q 餅皮、W 處理辛辣、E 賣出、空白鍵 繼續
   document.addEventListener('keydown', function (ev) {
     if (!g) return;
-    var map = { '1': 'top1', '2': 'top2', '3': 'top3', q: 'crust', w: 'clear', e: 'sell' };
-    var k = ev.key.toLowerCase();
+    var map = { '1': 'top1', '2': 'top2', '3': 'top3', q: 'crust', w: 'clear', e: 'sell' }, k = ev.key.toLowerCase();
     if (map[k]) { var b = btn(map[k]); if (!b.disabled) b.click(); }
     else if (k === ' ' && g.S.phase === 'dayend') { ev.preventDefault(); continueDay(); }
   });
 
-  // ---------- 除錯用：?autostart=1&speed=20 ----------
+  // 開始畫面的披薩：用初始狀態畫一張
+  (function hero() {
+    var s = Core.createGame().S; s.rot = 0;
+    renderPizza(buildPizza($('hero-svg'), false, 'hero'), s);
+  })();
+
+  // ---------- 除錯：?autostart=1&speed=20 ----------
   var errBox = document.createElement('div'); errBox.id = 'err'; errBox.hidden = true; document.body.appendChild(errBox);
   window.addEventListener('error', function (e) { errBox.textContent += (e.message || e) + ' @' + e.lineno + '\n'; });
   var Q = new URLSearchParams(location.search);
   if (Q.has('speed')) { var sp = parseFloat(Q.get('speed')) || 1; CFG.STEP_MS = Math.round(CFG.STEP_MS / sp); CFG.DAY_END_MS = Math.round(CFG.DAY_END_MS / sp); }
   window.__game = function () { return g; };
   if (Q.has('autostart')) startGame();
+  if (Q.has('demo') && g) { // 截圖用：擺幾個甜料看看長相
+    var d1 = g.southSlice(); d1.owner = 'player'; d1.value = 14; d1.topping = { side: 'player', tier: 3 };
+    var d2 = g.S.slices[g.east()]; d2.topping = { side: 'player', tier: 2 };
+    var d3 = g.S.slices[g.west()]; d3.owner = 'player'; d3.value = 9; d3.topping = { side: 'player', tier: 1 };
+    renderAll();
+  }
 })();
 </script>
 </body>
