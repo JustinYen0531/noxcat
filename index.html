@@ -106,6 +106,27 @@
   .actions .b-gold { border-color: rgba(255,191,71,.35); } .actions .b-gold .cost { color: var(--gold); }
   .actions .b-cyan { border-color: rgba(95,227,232,.35); } .actions .b-cyan .lbl { color: var(--cyan); }
 
+  /* ---------- 採購階段 ---------- */
+  .shop { display: flex; flex-direction: column; gap: 8px; }
+  .shop-head { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 10px; align-items: center; }
+  .shop-title { grid-column: 1; grid-row: 1; font-family: var(--f-disp); font-size: 17px; font-weight: 900; letter-spacing: 2px; color: var(--gold); }
+  .shop-sum { grid-column: 1; grid-row: 2; font-size: 11.5px; color: var(--muted); }
+  .shop-cd { grid-column: 2; grid-row: 1 / 3; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .shop-cd b { font-size: 26px; font-weight: 900; font-family: var(--f-disp); } .shop-cd small { font-size: 10px; color: var(--muted); margin-left: 2px; }
+  .shop .quote { font-size: 12px; color: var(--cyan); border-left: 2px solid var(--cyan); padding-left: 8px; line-height: 1.4; }
+  .shop-grid { display: grid; gap: 6px; }
+  .shop-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .shop-grid.four { grid-template-columns: repeat(4, 1fr); }
+  .shop-grid button { min-height: 50px; padding: 4px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 10px; }
+  .shop-grid .lbl { font-size: 13px; font-weight: 700; letter-spacing: .5px; }
+  .shop-grid .cost { font-size: 11px; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .shop-grid .stock { font-size: 10px; color: var(--muted); }
+  .shop-grid.four button { border-color: rgba(255,191,71,.25); }
+  .shop-foot { display: flex; align-items: center; gap: 10px; }
+  .shop-foot .inv { flex: 1; font-size: 11px; color: var(--muted); line-height: 1.4; }
+  .shop-foot .inv b { color: var(--ink); }
+  button.big.small { font-size: 16px; padding: 11px 20px; letter-spacing: 2px; box-shadow: none; }
+
   /* ---------- 覆蓋層 / 結局 ---------- */
   .overlay { position: absolute; inset: 0; background: rgba(6,4,14,.82); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10; }
   .card { background: #15111f; border: 1px solid rgba(255,191,71,.22); border-radius: 18px; padding: 22px 20px; width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 14px; }
@@ -188,34 +209,40 @@
     <div id="log" class="log"></div>
 
     <div class="panel">
-      <div class="focus">
-        <div class="hour" id="si-hour">00:00</div>
-        <div class="meta"><span class="chip none" id="si-owner">無主</span><span class="chip hidden" id="si-top"></span></div>
-        <div class="hint" id="hint"></div>
-      </div>
-      <div class="actions">
-        <button data-act="top1"><span class="lbl">甜料 Ⅰ</span><span class="cost" id="c-top1"></span></button>
-        <button data-act="top2"><span class="lbl">甜料 Ⅱ</span><span class="cost" id="c-top2"></span></button>
-        <button data-act="top3"><span class="lbl">甜料 Ⅲ</span><span class="cost" id="c-top3"></span></button>
-        <button data-act="crust" class="b-gold"><span class="lbl" id="l-crust">改造餅皮</span><span class="cost" id="c-crust"></span></button>
-        <button data-act="clear" class="b-cyan"><span class="lbl" id="l-clear">處理辣椒</span><span class="cost" id="c-clear"></span></button>
-        <button data-act="sell"><span class="lbl">賣出</span><span class="cost" id="c-sell"></span></button>
-      </div>
-    </div>
-
-    <div id="s-dayend" class="overlay hidden">
-      <div class="card">
-        <h2>第 <span id="de-day">1</span> 天結束</h2>
-        <div class="grid">
-          <span>你的領地</span><b id="de-ps"></b>
-          <span>魔王領地</span><b id="de-bs"></b>
-          <span>領地總價值</span><b id="de-pv"></b>
-          <span>現金</span><b id="de-money"></b>
-          <span>明日收入</span><b id="de-income"></b>
+      <div id="play-panel">
+        <div class="focus">
+          <div class="hour" id="si-hour">00:00</div>
+          <div class="meta"><span class="chip none" id="si-owner">無主</span><span class="chip hidden" id="si-top"></span></div>
+          <div class="hint" id="hint"></div>
         </div>
-        <div class="quote" id="de-nox"></div>
-        <button id="btn-continue" class="big">繼續</button>
-        <div class="countdown" id="de-cd"></div>
+        <div class="actions">
+          <button data-act="top1"><span class="lbl">甜料 Ⅰ</span><span class="cost" id="c-top1"></span></button>
+          <button data-act="top2"><span class="lbl">甜料 Ⅱ</span><span class="cost" id="c-top2"></span></button>
+          <button data-act="top3"><span class="lbl">甜料 Ⅲ</span><span class="cost" id="c-top3"></span></button>
+          <button data-act="crust" class="b-gold"><span class="lbl" id="l-crust">改造餅皮</span><span class="cost" id="c-crust"></span></button>
+          <button data-act="clear" class="b-cyan"><span class="lbl" id="l-clear">處理辣椒</span><span class="cost" id="c-clear"></span></button>
+          <button data-act="sell"><span class="lbl">賣出</span><span class="cost" id="c-sell"></span></button>
+        </div>
+      </div>
+
+      <!-- 採購階段：披薩留在畫面上，面板換成商店 -->
+      <div id="shop" class="shop hidden">
+        <div class="shop-head">
+          <div class="shop-title">第 <span id="sh-day">1</span> 天結束 · 採購</div>
+          <div class="shop-sum" id="sh-sum"></div>
+          <div class="shop-cd"><b id="sh-cd">15</b><small>秒</small></div>
+        </div>
+        <div class="quote" id="sh-nox"></div>
+        <div class="shop-grid three">
+          <button data-buy="t1"><span class="lbl">甜料 Ⅰ</span><span class="cost">$10</span><span class="stock" id="st-t1"></span></button>
+          <button data-buy="t2"><span class="lbl">甜料 Ⅱ</span><span class="cost">$25</span><span class="stock" id="st-t2"></span></button>
+          <button data-buy="t3"><span class="lbl">甜料 Ⅲ</span><span class="cost">$50</span><span class="stock" id="st-t3"></span></button>
+        </div>
+        <div class="shop-grid four" id="sh-crusts"></div>
+        <div class="shop-foot">
+          <div class="inv" id="sh-inv"></div>
+          <button id="btn-next" class="big small">第 2 天</button>
+        </div>
       </div>
     </div>
 
@@ -256,7 +283,7 @@
   var NS = 'http://www.w3.org/2000/svg';
   var R = 112, R_CRUST = 126;
 
-  var g = null, acc = 0, last = 0, tick = 0, paused = false, dayEndAt = 0, H = null;
+  var g = null, acc = 0, last = 0, tick = 0, paused = false, H = null;
 
   // ---------- SVG 工具 ----------
   function pt(deg, r) { var a = deg * Math.PI / 180; return [r * Math.sin(a), -r * Math.cos(a)]; }
@@ -301,6 +328,7 @@
     grad(defs, uid + '-none', '#f7e4b8', '#dfbf82');
     grad(defs, uid + '-player', '#ffd267', '#ee8c14');
     grad(defs, uid + '-boss', '#8f2a2a', '#3a0d0d');
+    grad(defs, uid + '-gone', '#1c1310', '#090607');
     var pat = el('pattern', { id: uid + '-burn', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)' }, defs);
     el('rect', { width: 2.2, height: 7, fill: 'rgba(0,0,0,.22)' }, pat);
 
@@ -359,7 +387,7 @@
       L.g.style.transform = 'translate(0px,0px)';
       L.hr.setAttribute('transform', 'translate(' + f(hp[0]) + ',' + f(hp[1]) + ')');
       L.val.setAttribute('transform', 'translate(' + f(vp[0]) + ',' + f(vp[1]) + ')');
-      L.val.textContent = sl.owner === 'none' ? '' : String(sl.value);
+      L.val.textContent = sl.owner === 'none' ? '' : sl.owner === 'gone' ? '✕' : String(sl.value);
     }
   }
 
@@ -371,9 +399,10 @@
     $('hud-money').textContent = S.money;
     $('hud-nox').textContent = S.nox;
   }
-  function ownerName(o) { return o === 'player' ? '你的' : o === 'boss' ? '魔王' : '無主'; }
+  function ownerName(o) { return o === 'player' ? '你的' : o === 'boss' ? '魔王' : o === 'gone' ? '被抽走' : '無主'; }
   function hintFor(sl) {
     var top = sl.topping;
+    if (sl.owner === 'gone') return '魔王抽走了這片，' + sl.goneLeft + ' 步後回來';
     if (top && top.side === 'boss') return top.kind === 'tech' ? '技術摩擦，Nox 可以免費處理' : '生活壓力，Nox 幫不上，得自己花錢';
     if (sl.owner === 'boss') return '甜料每天削弱它，或付錢直接奪回';
     if (sl.owner === 'none') return '甜料結算兩次歸你，改造餅皮立刻歸你';
@@ -393,10 +422,15 @@
     else { st.textContent = '甜料 ' + CFG.TOPPING[top.tier].name; st.className = 'chip sweet'; }
     $('hint').textContent = hintFor(sl);
 
-    for (var t = 1; t <= 3; t++) { btn('top' + t).disabled = !g.canTopping(t); $('c-top' + t).textContent = '$' + CFG.TOPPING[t].cost; }
+    for (var t = 1; t <= 3; t++) {
+      var tp = g.toppingPlan(t);
+      btn('top' + t).disabled = !g.canTopping(t);
+      $('c-top' + t).textContent = tp.stock > 0 ? '庫存 ' + tp.stock : '急買 $' + tp.rushCost;
+    }
+    var cp = g.crustPlan(sl);
     btn('crust').disabled = !g.canCrust();
     $('l-crust').textContent = sl.owner === 'player' ? '強化餅皮' : sl.owner === 'boss' ? '奪回餅皮' : '改造餅皮';
-    $('c-crust').textContent = '$' + g.costCrust(sl);
+    $('c-crust').textContent = sl.owner === 'gone' ? '—' : cp.fromStock ? '庫存 · 價值 ' + cp.value : '急買 $' + cp.cost + ' · 價值 ' + cp.value;
 
     var ci = g.clearInfo(), bl = btn('clear');
     if (!top || top.side !== 'boss') { $('l-clear').textContent = '處理辣椒'; $('c-clear').textContent = '—'; bl.disabled = true; }
@@ -411,7 +445,49 @@
     var L = g.S.log; if (!L.length) return;
     if (L.length !== lastLogLen) { lastLogLen = L.length; var e = L[L.length - 1]; $('log').textContent = e.text; $('log').className = 'log ' + e.side; }
   }
-  function renderAll() { renderPizza(H, g.S); renderHud(); renderPanel(); renderLog(); }
+  function renderAll() { renderPizza(H, g.S); renderHud(); renderPanel(); renderLog(); if (g.S.phase === 'shop') renderShop(); }
+
+  // ---------- 採購階段 ----------
+  var shopAt = 0;
+  function openShop() {
+    var d = g.S.shopSummary;
+    $('sh-day').textContent = d.day;
+    $('sh-nox').textContent = 'Nox：' + d.noxLine;
+    $('btn-next').textContent = '第 ' + (d.day + 1) + ' 天';
+    shopAt = performance.now() + CFG.SHOP_MS;
+    $('play-panel').classList.add('hidden');
+    $('shop').classList.remove('hidden');
+    renderShop();
+  }
+  function renderShop() {
+    var S = g.S, d = g.summary();
+    $('sh-sum').textContent = '你 ' + d.playerSlices + ' 片 · 魔王 ' + d.bossSlices + ' 片 · 明天 +$' + CFG.DAILY_INCOME + (S.upkeep ? ' −$' + S.upkeep + ' 生活成本' : '');
+    for (var t = 1; t <= 3; t++) {
+      var b = document.querySelector('[data-buy="t' + t + '"]');
+      b.disabled = !g.canBuyTopping(t);
+      $('st-t' + t).textContent = '庫存 ' + S.inv.toppings[t];
+    }
+    var box = $('sh-crusts'); box.innerHTML = '';
+    CFG.CRUST_TIERS.forEach(function (v) {
+      var b = document.createElement('button');
+      b.setAttribute('data-buy', 'c' + v);
+      b.disabled = !g.canBuyCrust(v);
+      b.innerHTML = '<span class="lbl">餅皮 ' + v + '</span><span class="cost">$' + g.crustCost(v) + '</span>';
+      box.appendChild(b);
+    });
+    var cr = S.inv.crusts.length ? S.inv.crusts.map(function (v) { return v; }).join('、') : '無';
+    $('sh-inv').innerHTML = '庫存餅皮：<b>' + cr + '</b><br>買了白天直接放；沒庫存時急買貴 25%';
+  }
+  function closeShop() {
+    $('shop').classList.add('hidden');
+    $('play-panel').classList.remove('hidden');
+  }
+  $('shop').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button[data-buy]'); if (!b || b.disabled || !g || g.S.phase !== 'shop') return;
+    var k = b.getAttribute('data-buy'), ok = false;
+    if (k[0] === 't') ok = g.buyTopping(+k.slice(1)); else ok = g.buyCrust(+k.slice(1));
+    if (ok) { renderHud(); renderShop(); }
+  });
 
   // ---------- 流程 ----------
   function show(id) { ['s-start', 's-game', 's-result'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); }); }
@@ -422,7 +498,7 @@
     H = buildPizza($('svg'), true, 'game');
     H.rot.style.transition = 'none';
     renderAll();
-    $('s-dayend').classList.add('hidden'); $('s-pause').classList.add('hidden');
+    closeShop(); $('s-pause').classList.add('hidden');
     show('s-game');
     setTimeout(function () { H.rot.style.transition = ''; }, 60);
     clearInterval(tick); tick = setInterval(loop, 33);
@@ -439,34 +515,22 @@
       if (acc >= CFG.STEP_MS) {
         acc -= CFG.STEP_MS;
         var r = g.nextStep();
-        if (r.dayEnded) { acc = 0; openDayEnd(); }
+        if (r.gameOver) { renderAll(); showResult(); return; }
+        if (r.dayEnded) { acc = 0; renderAll(); openShop(); return; }
         renderAll();
       }
-    } else if (S.phase === 'dayend') {
-      var left = Math.max(0, dayEndAt - performance.now());
-      $('de-cd').textContent = Math.ceil(left / 1000) + ' 秒後自動繼續';
+    } else if (S.phase === 'shop') {
+      var left = Math.max(0, shopAt - performance.now());
+      $('sh-cd').textContent = Math.ceil(left / 1000);
       if (left <= 0) continueDay();
     }
   }
 
-  function openDayEnd() {
-    var d = g.S.daySummary;
-    $('de-day').textContent = d.day;
-    $('de-ps').textContent = d.playerSlices + ' 片';
-    $('de-bs').textContent = d.bossSlices + ' 片';
-    $('de-pv').textContent = d.playerValue;
-    $('de-money').textContent = '$' + d.money;
-    $('de-income').textContent = d.day >= CFG.DAYS ? '—' : '+$' + CFG.DAILY_INCOME;
-    $('de-nox').textContent = 'Nox：' + d.noxLine;
-    $('btn-continue').textContent = d.day >= CFG.DAYS ? '看結果' : '第 ' + (d.day + 1) + ' 天';
-    dayEndAt = performance.now() + CFG.DAY_END_MS;
-    $('s-dayend').classList.remove('hidden');
-  }
   function continueDay() {
+    if (g.S.phase !== 'shop') return;
     g.continueDay();
-    $('s-dayend').classList.add('hidden');
-    if (g.S.phase === 'result') { showResult(); return; }
-    acc = 0; renderAll();
+    closeShop();
+    acc = 0; last = 0; renderAll();
   }
   function showResult() {
     var r = g.S.result; clearInterval(tick);
@@ -497,7 +561,7 @@
   });
   $('btn-start').addEventListener('click', startGame);
   $('btn-again').addEventListener('click', startGame);
-  $('btn-continue').addEventListener('click', continueDay);
+  $('btn-next').addEventListener('click', continueDay);
   $('btn-pause').addEventListener('click', function () { if (g && g.S.phase === 'play') { paused = true; $('s-pause').classList.remove('hidden'); } });
   $('btn-resume').addEventListener('click', function () { paused = false; last = 0; $('s-pause').classList.add('hidden'); });
   $('btn-quit').addEventListener('click', function () { clearInterval(tick); $('s-pause').classList.add('hidden'); show('s-start'); });
@@ -508,7 +572,7 @@
     if (!g) return;
     var map = { '1': 'top1', '2': 'top2', '3': 'top3', q: 'crust', w: 'clear', e: 'sell' }, k = ev.key.toLowerCase();
     if (map[k]) { var b = btn(map[k]); if (!b.disabled) b.click(); }
-    else if (k === ' ' && g.S.phase === 'dayend') { ev.preventDefault(); continueDay(); }
+    else if (k === ' ' && g.S.phase === 'shop') { ev.preventDefault(); continueDay(); }
   });
 
   // 開始畫面的披薩：用初始狀態畫一張
@@ -521,7 +585,7 @@
   var errBox = document.createElement('div'); errBox.id = 'err'; errBox.hidden = true; document.body.appendChild(errBox);
   window.addEventListener('error', function (e) { errBox.textContent += (e.message || e) + ' @' + e.lineno + '\n'; });
   var Q = new URLSearchParams(location.search);
-  if (Q.has('speed')) { var sp = parseFloat(Q.get('speed')) || 1; CFG.STEP_MS = Math.round(CFG.STEP_MS / sp); CFG.DAY_END_MS = Math.round(CFG.DAY_END_MS / sp); }
+  if (Q.has('speed')) { var sp = parseFloat(Q.get('speed')) || 1; CFG.STEP_MS = Math.round(CFG.STEP_MS / sp); CFG.SHOP_MS = Math.round(CFG.SHOP_MS / sp); }
   window.__game = function () { return g; };
   if (Q.has('autostart')) startGame();
   if (Q.has('demo') && g) { // 截圖用：擺幾個甜料看看長相
