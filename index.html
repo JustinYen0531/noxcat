@@ -101,6 +101,36 @@
     background: radial-gradient(circle, rgba(95,227,232,.1), transparent 62%); box-shadow: inset 0 0 24px rgba(95,227,232,.06); }
   .tutorial-cycle b { color: var(--gold); font-family: var(--f-disp); font-size: 24px; } .tutorial-cycle span { color: var(--muted); font-size: 9px; letter-spacing: 2px; }
   .tutorial-tip { grid-column: 1 / -1; margin-top: 2px; padding: 10px 12px; border-left: 2px solid var(--cyan); color: #b9b1ca; font-size: 11px; line-height: 1.6; background: rgba(95,227,232,.035); }
+  .formula-lab { grid-column: 1 / -1; margin-top: 10px; padding-top: 18px; border-top: 1px solid rgba(95,227,232,.16); }
+  .formula-heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 10px; }
+  .formula-heading h3 { margin: 0; color: var(--gold); font-family: var(--f-disp); font-size: clamp(20px, 4vh, 28px); letter-spacing: 4px; }
+  .formula-heading p { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+  .formula-seal { flex: 0 0 auto; color: var(--cyan); border: 1px solid rgba(95,227,232,.28); border-radius: 999px; padding: 4px 10px; font-size: 9px; letter-spacing: 2px; }
+  .formula-group { margin-top: 7px; border: 1px solid rgba(255,255,255,.085); border-radius: 11px; overflow: hidden; background: rgba(5,6,11,.54); }
+  .formula-group[open] { border-color: rgba(95,227,232,.22); box-shadow: inset 3px 0 0 rgba(95,227,232,.42); }
+  .formula-group summary { position: relative; display: flex; align-items: center; gap: 10px; padding: 11px 38px 11px 13px; cursor: pointer; list-style: none; user-select: none; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+  .formula-group summary::-webkit-details-marker { display: none; }
+  .formula-group summary::after { content: '＋'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--cyan); font-size: 16px; font-weight: 400; }
+  .formula-group[open] summary::after { content: '−'; }
+  .formula-index { color: var(--cyan); font-size: 9px; letter-spacing: 2px; font-weight: 500; }
+  .formula-body { padding: 0 13px 14px; color: var(--muted); font-size: 11px; line-height: 1.62; }
+  .formula-body p { margin: 7px 0; }
+  .formula-body strong { color: var(--ink); }
+  .formula-body .formula { display: block; margin: 8px 0; padding: 8px 10px; border-left: 2px solid var(--gold); background: rgba(255,191,71,.045); color: #f3ddad; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 10.5px; line-height: 1.55; overflow-wrap: anywhere; }
+  .formula-body .note { color: #bfb6d0; }
+  .formula-body .warning { color: #efaaa5; }
+  .data-scroll { overflow-x: auto; margin: 8px 0; }
+  .data-table { width: 100%; min-width: 610px; border-collapse: collapse; font-size: 10.5px; font-variant-numeric: tabular-nums; }
+  .data-table th, .data-table td { padding: 7px 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.065); vertical-align: top; }
+  .data-table th { color: var(--cyan); font-size: 9px; letter-spacing: 1px; font-weight: 700; background: rgba(95,227,232,.035); }
+  .data-table td:first-child { color: var(--ink); font-weight: 700; white-space: nowrap; }
+  .data-table tr:last-child td { border-bottom: 0; }
+  .formula-list { margin: 7px 0 0; padding-left: 18px; }
+  .formula-list li { margin: 4px 0; }
+  .score-breakdown { display: grid; grid-template-columns: repeat(5, minmax(92px, 1fr)); gap: 5px; margin: 9px 0; }
+  .score-breakdown div { padding: 8px; border: 1px solid rgba(255,255,255,.07); border-radius: 8px; text-align: center; background: rgba(255,255,255,.025); }
+  .score-breakdown b { display: block; color: var(--gold); font-family: var(--f-disp); font-size: 17px; }
+  .score-breakdown small { color: var(--muted); font-size: 8.5px; line-height: 1.35; }
   .tutorial-footer { display: flex; justify-content: center; align-items: center; gap: 9px; margin-top: 16px; padding-bottom: 2px; }
   .tutorial-footer .ghost, .tutorial-head .ghost { border: 1px solid rgba(255,255,255,.09); }
   @media (max-width: 760px) {
@@ -108,6 +138,8 @@
     .manual-card, .manual-card.wide { grid-column: auto; grid-template-columns: 118px 1fr; }
     .wide .demo-pizza { width: 126px; height: 126px; }
     .tutorial-head h2 { letter-spacing: 3px; }
+    .score-breakdown { grid-template-columns: repeat(2, minmax(92px, 1fr)); }
+    .formula-seal { display: none; }
   }
 
   /* ---------- 遊戲畫面：左 狀態 / 中 披薩 / 右 操作 ---------- */
@@ -303,6 +335,169 @@
         </article>
 
         <div class="tutorial-tip"><strong>記住就好：</strong>先看南方金框 → 判斷這片屬於誰 → 再決定加甜料、換餅皮或處理辣椒。你不需要每一片都贏；只是別讓整週都在替別人運轉。</div>
+
+        <section class="formula-lab" aria-labelledby="formula-title">
+          <div class="formula-heading">
+            <div>
+              <h3 id="formula-title">完整數據與公式</h3>
+              <p>以下就是遊戲真正採用的數值，沒有隱藏加成。點擊任一項即可展開或收合。</p>
+            </div>
+            <span class="formula-seal">OPEN RULESET</span>
+          </div>
+
+          <details class="formula-group" data-rule-section="time">
+            <summary><span class="formula-index">DATA 01</span>開局、時間與位置</summary>
+            <div class="formula-body">
+              <div class="data-scroll"><table class="data-table">
+                <thead><tr><th>數值</th><th>正式設定</th><th>功能</th></tr></thead>
+                <tbody>
+                  <tr><td>披薩切片</td><td>12 片，每片 2 小時</td><td>合計一天 24 小時；一片就是一個可爭奪時段。</td></tr>
+                  <tr><td>一局長度</td><td>7 天 × 每天 12 步</td><td>第 7 天最後一步後立刻結算，沒有第 7 天採購。</td></tr>
+                  <tr><td>操作時間</td><td>每步 3 秒</td><td>倒數完便順時針前進 30°，進入下一片。</td></tr>
+                  <tr><td>採購時間</td><td>每天 15 秒</td><td>可按按鈕提早結束；只在第 1～6 天結束時出現。</td></tr>
+                  <tr><td>起始現金</td><td>$100</td><td>用於甜料、餅皮、急買與生活壓力。</td></tr>
+                  <tr><td>起始領地</td><td>玩家 1 片／魔王 5 片／無主 6 片</td><td>玩家從 22:00、價值 8 開始；魔王持有 08:00～16:00，五片各價值 12。</td></tr>
+                </tbody>
+              </table></div>
+              <span class="formula">位置公式：北方 = 當前步數；南方 =（步數 + 6）mod 12；西方 =（步數 + 3）mod 12</span>
+              <p class="note">每一步的處理順序是：所有被抽走切片倒數 → 北方魔王行動 → 西方時段結算。玩家只能操作當下位於南方的切片。</p>
+            </div>
+          </details>
+
+          <details class="formula-group" data-rule-section="toppings">
+            <summary><span class="formula-index">DATA 02</span>甜料Ⅰ／Ⅱ／Ⅲ的全部效果</summary>
+            <div class="formula-body">
+              <div class="data-scroll"><table class="data-table">
+                <thead><tr><th>甜料</th><th>採購價</th><th>白天急買</th><th>自家／無主收入</th><th>自家額外增值</th><th>削弱魔王</th><th>無主轉換</th></tr></thead>
+                <tbody>
+                  <tr><td>Ⅰ 小確幸</td><td>$10</td><td>$13</td><td>+$3</td><td>+2</td><td>−4</td><td>結算 3 次</td></tr>
+                  <tr><td>Ⅱ 好習慣</td><td>$25</td><td>$31</td><td>+$7</td><td>+4</td><td>−9</td><td>結算 2 次</td></tr>
+                  <tr><td>Ⅲ 生活自主</td><td>$50</td><td>$63</td><td>+$15</td><td>+8</td><td>−20</td><td>結算 1 次</td></tr>
+                </tbody>
+              </table></div>
+              <span class="formula">白天急買價格 = 四捨五入（採購價 × 1.25）</span>
+              <ul class="formula-list">
+                <li><strong>放在玩家餅皮：</strong>先自然增值 +1，再加甜料增值 +2／+4／+8，所以每次淨增值為 <strong>+3／+5／+9</strong>，並同時獲得收入。</li>
+                <li><strong>放在無主餅皮：</strong>每次照常收入，累積 3／2／1 次後變成玩家餅皮，起始價值為 10；甜料保留。</li>
+                <li><strong>放在魔王餅皮：</strong>不產生收入。魔王餅皮先自然增值 +1，再受 −4／−9／−20，因此每次淨變化為 <strong>−3／−8／−19</strong>。降至 0 以下時變成無主，該甜料消失。</li>
+                <li><strong>升級限制：</strong>已有玩家甜料時，只能換成更高等級；已有辣椒或相同／更高等甜料時不能覆蓋。</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="formula-group" data-rule-section="spicy">
+            <summary><span class="formula-index">DATA 03</span>辣椒、侵蝕與 Nox</summary>
+            <div class="formula-body">
+              <div class="data-scroll"><table class="data-table">
+                <thead><tr><th>辣度</th><th>每次扣現金</th><th>侵蝕玩家餅皮</th><th>實際淨侵蝕</th><th>無主轉魔王</th></tr></thead>
+                <tbody>
+                  <tr><td>Ⅰ</td><td>−$3</td><td>−5</td><td>−4</td><td>結算 3 次</td></tr>
+                  <tr><td>Ⅱ</td><td>−$5</td><td>−9</td><td>−8</td><td>結算 2 次</td></tr>
+                  <tr><td>Ⅲ</td><td>−$8</td><td>−14</td><td>−13</td><td>結算 1 次</td></tr>
+                </tbody>
+              </table></div>
+              <p>辣椒每次經過西方都先扣現金，最多只扣到 $0，不會讓現金變成負數。玩家餅皮先自然增值 +1，再承受侵蝕，所以淨侵蝕如表；價值降至 0 以下便回到無主，辣椒消失。</p>
+              <ul class="formula-list">
+                <li><strong>辣椒在無主餅皮：</strong>累積 3／2／1 次後轉成價值 10 的魔王餅皮。</li>
+                <li><strong>辣椒在魔王餅皮：</strong>自然增值 +1，再額外 +2，合計每次 <strong>+3</strong>。</li>
+                <li><strong>技術摩擦：</strong>Nox 每天有 3 次免費處理額度，處理一次消耗 1 格，不扣現金。</li>
+                <li><strong>生活壓力：</strong>清除一次固定 $20；Nox 不會代替玩家支付。</li>
+                <li><strong>每日重置：</strong>Nox 額度每天回到 3，不累積到隔天；第 1～6 天採購開始時，各贈送甜料Ⅰ一份。</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="formula-group" data-rule-section="crusts">
+            <summary><span class="formula-index">DATA 04</span>餅皮價值、購買、替換與賣出</summary>
+            <div class="formula-body">
+              <div class="data-scroll"><table class="data-table">
+                <thead><tr><th>採購餅皮價值</th><th>10</th><th>20</th><th>30</th><th>45</th></tr></thead>
+                <tbody><tr><td>採購價格</td><td>$40</td><td>$55</td><td>$70</td><td>$93</td></tr></tbody>
+              </table></div>
+              <span class="formula">採購價格 = 四捨五入（25 + 1.5 × 餅皮價值）</span>
+              <span class="formula">白天急買價格 = 四捨五入［四捨五入（25 + 1.5 × 目標價值）× 1.25］</span>
+              <ul class="formula-list">
+                <li><strong>自然增值：</strong>玩家或魔王餅皮每次在西方結算時先 +1；無主與被抽走切片不增值。</li>
+                <li><strong>使用庫存：</strong>系統會自動使用庫存中價值最低、但仍高於目前餅皮價值的那一片；放到無主時使用庫存中的最低價值餅皮。</li>
+                <li><strong>沒有庫存：</strong>無主時急買價值 10；奪回魔王餅皮時，目標價值 = 魔王目前價值 +5；強化自家餅皮時，目標價值 = 目前價值 +8。</li>
+                <li><strong>替換門檻：</strong>只要新餅皮價值嚴格高於舊餅皮即可替換。被抽走的切片不能放餅皮。</li>
+                <li><strong>調料不會被餅皮蓋掉：</strong>改造餅皮只會改變底層的主人與價值，上方既有的甜料或辣椒仍會保留。</li>
+                <li><strong>賣出：</strong>賣價 = 當下餅皮完整價值；賣出後該片回到無主。原本放在上面的甜料或辣椒也會保留，並繼續依無主規則累積轉換。</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="formula-group" data-rule-section="economy">
+            <summary><span class="formula-index">DATA 05</span>每日收入、支出與資源用途</summary>
+            <div class="formula-body">
+              <span class="formula">第 2～7 天開始現金 = 原有現金 + $70 − 累積生活成本（最低降至 $0）</span>
+              <ul class="formula-list">
+                <li><strong>CASH：</strong>起始 $100。可買甜料、餅皮、支付急買溢價、以每次 $20 清除生活壓力；也會被辣椒與魔王突發支出扣除。</li>
+                <li><strong>NOX：</strong>每天 3 格，只能清除技術摩擦。使用次數會出現在結局紀錄，<strong>但不直接增加幸福指數</strong>。</li>
+                <li><strong>餅皮價值：</strong>既是生活領地的穩固度，也是賣出時取得的現金；玩家所有餅皮的價值總和會直接加入幸福指數。</li>
+                <li><strong>庫存：</strong>採購時先買可以避開 25% 急買加價；庫存沒有保存上限，也不會在換日消失。</li>
+                <li><strong>累積生活成本：</strong>魔王每次觸發就永久 +$5，之後每天開始都扣除；同一局內不會自行下降。</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="formula-group" data-rule-section="boss">
+            <summary><span class="formula-index">DATA 06</span>魔王事件機率與成長規則</summary>
+            <div class="formula-body">
+              <p class="warning">魔王不是把所有事件同時骰一次，而是依下列順序檢查；前面的事件成功並生效後，這一步通常就停止，不再檢查後面的事件。因此表中的數字是「輪到該項檢查時」的機率。</p>
+              <div class="data-scroll"><table class="data-table">
+                <thead><tr><th>順序</th><th>事件</th><th>開始日</th><th>機率／公式</th><th>實際功能</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>突發支出</td><td>第 2 天</td><td>5%</td><td>扣除 min（現金，10 + 3 × 天數）：第 2～7 天上限為 $16／19／22／25／28／31。</td></tr>
+                  <tr><td>2</td><td>增加生活成本</td><td>第 3 天</td><td>4%</td><td>本局永久每日支出 +$5，可重複累積。</td></tr>
+                  <tr><td>3</td><td>抽走甜料</td><td>第 1 天</td><td>25%</td><td>只在魔王餅皮上已有玩家甜料時檢查；不論是否抽成功，魔王都不再動該餅皮。</td></tr>
+                  <tr><td>4</td><td>辣椒升級</td><td>第 4 天</td><td>30%</td><td>已有Ⅰ或Ⅱ級辣椒時升一級；有辣椒就不再觸發其他行動。</td></tr>
+                  <tr><td>5</td><td>抽走整片</td><td>第 3 天</td><td>5%</td><td>只在沒有調料時，抽無主或價值低於 15 的玩家餅皮；12 步後以無主狀態回來。</td></tr>
+                  <tr><td>6</td><td>奪取玩家餅皮</td><td>第 3 天</td><td>15%</td><td>只在沒有調料，且玩家餅皮價值低於 8 + 4 × 天數時，換成價值「原值 +3」的魔王餅皮。</td></tr>
+                  <tr><td>7</td><td>撒辣椒</td><td>第 1 天</td><td>30% + 5% × 天數</td><td>只在沒有調料時判定；第 1～7 天依序為 35／40／45／50／55／60／65%。</td></tr>
+                  <tr><td>8</td><td>填滿無主時間</td><td>第 4 天</td><td>12%</td><td>只在前面都未生效、仍是無主且沒有調料時，變成價值 10 的魔王餅皮。</td></tr>
+                </tbody>
+              </table></div>
+              <p><strong>辣椒等級：</strong>第 1～2 天固定Ⅰ級；第 3～5 天固定Ⅱ級；第 6～7 天固定Ⅲ級。每次撒辣椒有 <strong>55%</strong> 是技術摩擦、<strong>45%</strong> 是生活壓力。</p>
+              <p class="note">玩家甜料也像一層保護：魔王抵達有玩家甜料的時段時，只可能嘗試抽走甜料，不會同時抽走、奪取餅皮或再撒辣椒。</p>
+            </div>
+          </details>
+
+          <details class="formula-group" data-rule-section="settlement">
+            <summary><span class="formula-index">DATA 07</span>西方結算的完整先後順序</summary>
+            <div class="formula-body">
+              <ol class="formula-list">
+                <li>如果整片仍被抽走：跳過所有結算。</li>
+                <li>如果已有玩家或魔王餅皮：餅皮先自然增值 +1。</li>
+                <li>如果沒有任何調料：本次結算結束。</li>
+                <li>如果是玩家甜料：依餅皮主人決定「收入＋增值」、「收入＋無主轉換進度」或「削弱魔王」。</li>
+                <li>如果是魔王辣椒：先扣現金，再依餅皮主人決定「侵蝕玩家」、「無主轉換進度」或「強化魔王」。</li>
+              </ol>
+              <p class="note">這個先後順序解釋了為什麼表面寫著「削弱 4」，魔王餅皮實際只少 3：它在同一次結算中先自然增加了 1。</p>
+            </div>
+          </details>
+
+          <details class="formula-group" data-rule-section="score">
+            <summary><span class="formula-index">DATA 08</span>幸福指數與勝負判定</summary>
+            <div class="formula-body">
+              <div class="score-breakdown" aria-label="幸福指數各項權重">
+                <div><b>+15</b><small>每片玩家領地</small></div>
+                <div><b>+1</b><small>每點玩家領地價值</small></div>
+                <div><b>+0.3</b><small>每元剩餘現金，合計後四捨五入</small></div>
+                <div><b>−8</b><small>每片魔王領地</small></div>
+                <div><b>−3</b><small>每顆殘留辣椒</small></div>
+              </div>
+              <span class="formula">幸福指數 = 玩家領地數 × 15 + 玩家領地總價值 + 四捨五入（剩餘現金 × 0.3）− 魔王領地數 × 8 − 殘留辣椒數 × 3</span>
+              <ul class="formula-list">
+                <li><strong>大勝：</strong>玩家領地達 7 片以上。</li>
+                <li><strong>小勝：</strong>玩家領地未達 7 片，但仍多於魔王領地。</li>
+                <li><strong>落敗：</strong>玩家領地少於或等於魔王領地。</li>
+                <li><strong>不直接計分：</strong>Nox 使用次數、無主切片、被抽走切片、庫存數量和魔王餅皮總價值不直接加減幸福指數。</li>
+              </ul>
+              <p class="warning">幸福指數與勝負是兩套判定：分數很高不一定達成「大勝」；大勝首先看你是否真正拿回至少 7 片生活。</p>
+            </div>
+          </details>
+        </section>
       </div>
 
       <footer class="tutorial-footer">
