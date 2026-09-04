@@ -14,3 +14,7 @@ assets/_raw/
 .claude/skills/
 
 node_modules/
+
+# Python 靜態檢查快取
+__pycache__/
+*.pyc

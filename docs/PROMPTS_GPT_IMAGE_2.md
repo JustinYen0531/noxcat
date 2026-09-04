@@ -59,14 +59,21 @@ Match the character design and art style of the attached reference image exactly
 Subject: the Overlord, a black cat demon shown from the waist up. He has tall pointed ears, a crown of jagged black spikes, and a layered tattered cape. His body is matte black with thin glowing green seams running through it. His narrow eyes glow bright green, and there are green diamond gems on his forehead and on his chest. Below the waist his body breaks apart into small drifting fragments and fades out.
 ```
 
-### NOXCAT（上傳 `NOXCAT IP_01.jpeg` 當參考圖）
+### NOXCAT（四張官方圖全部上傳，另上傳 C-01 作畫風參考）
 
 ```
-Match the character design of the attached reference image exactly.
-Subject: NOXCAT, a chibi black cat with an oversized head and a small body. He has huge bright lime-green eyes that dominate his face, tall pointed ears, and silver aviator goggles with green lenses resting on his forehead. He wears a black high-collar utility vest over a white long-sleeved shirt. His fur is charcoal grey, clearly lighter than pure black so he separates from a dark background. Green is the only bright colour on him; everything else is black, white and grey.
+Images 1–4 are the official NOXCAT references and control every identity, anatomy, face, clothing, colour and accessory detail. Image 5 is C-01 and controls only the dark jagged Overlord rendering style. Never replace an official NOXCAT detail with a detail from Image 5.
+
+Subject: NOXCAT, a chibi black cat with an oversized head and small body. Preserve every visible identity feature: two tall pointed ears; huge round lime-green irises with black pupils and large white catchlights; two separate thick light-grey teardrop-shaped eyebrows clearly visible below the goggles; a small light-grey triangular nose; three outward cheek-fur points on each side; silver-framed aviator goggles with two green lenses, centre bridge, hinges and black strap; a black high-collar sleeveless utility vest with centre zipper, two rectangular flap chest pockets and ribbed hem; a round silver-rimmed chest badge with a #91D500 face and the original black cat-head emblem with two white eyes; white long sleeves; black paws with light-grey pads; loose dark charcoal-blue jeans; black low-top sneakers with white soles and stripe details; and one long black tail ending in the same angular arrow/spade tip shown in the turnaround reference.
+
+Style: keep NOXCAT cute, streetwise, exploratory and clever, while translating him into C-01's rough hand-inked black outlines, angular cel-shaded planes, deep matte shadows, weathered edges and restrained green energy glints. He must feel native to the Overlord's game world without becoming a generic demon cat.
+
+Colour compliance: #91D500 is the only saturated accent hue, used for eyes, goggle lenses, badge and restrained technology glow. All other colours stay within #101820, #F6F6F6, #DAD9D7, #B2B2B2 and subdued charcoal denim. No cyan, blue, red, orange, purple, pink or brown accent.
+
+Strict exclusions: no missing or hidden eyebrows, no tiny green pupils inside large white eyeballs, no changed goggles, clothing, chest badge or tail tip, no generic cat redesign, no clean vector mascot finish, no altered NOXCAT name or mark, no text, letters, numbers, watermark, adult content, gore, abuse, self-harm, gambling, politics, religion, race or nationality messaging, scams, investment or exchange interfaces, drugs, tobacco, alcohol, weapon promotion, defamation, token, NFT or blockchain asset imagery, endorsement claims, merchandise mockups or extra characters.
 ```
 
-> 品牌規範：黑貓身形、螢光綠大眼、額前護目鏡、綠色為唯一強調色，四項缺一不可。角色名稱一律用 NOXCAT，不可簡寫或改名。
+> 品牌規範：黑貓身形、螢光綠大眼、額前護目鏡、綠色為唯一強調色，四項缺一不可。灰色雙眉、服裝、胸章與尖角尾端也必須依官方四張參考圖保留。角色名稱一律用 NOXCAT，不可簡寫或改名。若與《NOXCAT 素材使用授權》衝突，以授權條款為準。
 
 ---
 
@@ -199,10 +206,11 @@ Background: transparent.
 
 ### C-21～C-27 NOXCAT 狀態（七張）｜各 1024×1024｜遊戲內約 120px
 
-上傳 C-20 當參考圖：
+上傳 C-20 與四張官方 NOXCAT 圖當參考圖：
 
 ```
 Match the attached reference image exactly: same character, same art style, same thick outline, same colours, same framing. Change only his pose and expression, as follows: <見下表>
+Identity lock: keep the two separate light-grey eyebrows visible in every expression; keep the official huge green eye construction, goggles, cheek fur, grey nose, vest, zipper, two pockets, round chest badge, white sleeves, paw pads, jeans, shoes and angular-tipped tail. #91D500 remains the only saturated hue. A startled expression may open the eyelids wider but must never shrink the green irises into tiny pupils inside large white eyeballs.
 Composition: same as the reference. This asset is displayed only about 120 pixels tall in game, so keep it icon-simple and readable.
 Background: transparent.
 ```
