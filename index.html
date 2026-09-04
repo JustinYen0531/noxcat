@@ -64,7 +64,13 @@
   .hud .nox b { color: var(--nox); }
   .hud button { padding: 4px 10px; font-size: 13px; }
 
-  .stage { flex: 1; min-height: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 4px 8px; }
+  .stage { flex: 1; min-height: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 48px 8px 6px; }
+  @media (max-height: 720px) {
+    .stage { padding: 38px 8px 4px; }
+    .boss-ph, .nox-ph, .player-ph { height: 30px; font-size: 10px; }
+    .boss-ph { width: 96px; }
+    .hint { min-height: 16px; }
+  }
   .stage svg { height: 100%; width: 100%; max-height: 100%; display: block; }
   .boss-ph { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 104px; height: 40px; border-color: #d9736a; color: #f0a49c; }
   .nox-ph { position: absolute; top: 4px; right: 8px; width: 82px; height: 40px; border-color: var(--nox); color: var(--nox); }
