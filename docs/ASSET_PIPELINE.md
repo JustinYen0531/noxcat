@@ -45,9 +45,16 @@ python .agents/skills/game-assets/meowart_api.py credits-balance
 
 ---
 
-## 1. Prompt 寫法必須改（重要）
+## 1. 用哪一份 Prompt
 
-這個 skill 明確禁止傳統 diffusion 式 prompt。`ASSET_SPEC.md` 第 0 節那套 `[STYLE]` + `[NEG]` + 關鍵字堆疊**不要用**，會干擾模型判讀、降低一致性。
+`ASSET_SPEC.md` 每個資產都有兩份提示詞，**兩份都保留**：
+
+| 版本 | 用途 |
+| --- | --- |
+| **Prompt A（自然語言）** | **這條流程用這份。** Meowa 禁止關鍵字堆疊 |
+| **Prompt B（關鍵字堆疊）** | 規格保存格式；改用 Midjourney、SD 等其他工具時用這份 |
+
+下面說明的是 A 為什麼長那樣。這個 skill 明確禁止傳統 diffusion 式 prompt，關鍵字堆疊會干擾模型判讀、降低一致性。
 
 | 舊寫法（棄用） | 新寫法 |
 | --- | --- |
