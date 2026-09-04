@@ -61,7 +61,7 @@
 
 - 劇情過場、存檔、設定、進階動畫。
 - 角色（主角、Nox、魔王、LOGO）是低對比 placeholder，等資產圖。
-- 甜料只有等級差異，沒有種類差異（GDD 也沒定義種類效果）。
+- 餅皮與調料的 38 種人生事件已在 `docs/CONTENT_CATALOG.md` 定義，但遊戲目前仍只顯示三個甜料等級，尚未接入事件名稱與防重複抽取。
 
 ## 檔案
 
@@ -70,6 +70,7 @@
 - `tools/sim.js`：`node tools/sim.js 300` 模擬整局檢查平衡（idle / human / cautious / greedy）。
 - `tools/shot.js`：`node tools/shot.js screenshot "?autostart=1" 390 844 9000 out/game.png frame` 用 headless Chrome 截手機尺寸畫面。
 - `docs/GDD.md`：原始設計文件。
+- `docs/CONTENT_CATALOG.md`：4 種玩家餅皮、4 種魔王餅皮、15 種甜料與 15 種辣料的完整人生事件目錄，包含 NOXCAT 業務對應與品牌護欄。
 
 ## 之後要換資產的位置
 
