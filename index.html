@@ -63,7 +63,52 @@
   .sw.p { background: radial-gradient(#ffcf5e, #f08f17); } .sw.b { background: radial-gradient(#8a2626, #3f0f0f); } .sw.n { background: radial-gradient(#f6e2b4, #e2c48a); }
   .sw.x { background: transparent; border-color: var(--cyan); box-shadow: inset 0 0 8px rgba(95,227,232,.5); }
   #s-start .cta { display: flex; align-items: center; gap: 14px; margin-top: 6px; }
+  #s-start .menu-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  #s-start .tutorial-entry { border-color: rgba(95,227,232,.38); color: var(--cyan); background: rgba(11,34,43,.72); letter-spacing: 2px; font-weight: 700; }
   #s-start .keys { font-size: 10px; letter-spacing: 1px; color: var(--dim); line-height: 1.5; }
+
+  /* ---------- 靜態玩法教學 ---------- */
+  #s-tutorial { overflow-y: auto; padding: max(12px, 3vh) max(16px, 4vw); background: linear-gradient(180deg, rgba(6,7,10,.18), rgba(6,7,10,.72)); }
+  .tutorial-shell { width: min(1080px, 100%); margin: 0 auto; padding: clamp(16px, 3vw, 30px); border: 1px solid rgba(95,227,232,.2); border-radius: 18px;
+    background: linear-gradient(145deg, rgba(17,24,29,.94), rgba(12,10,20,.96)); box-shadow: 0 24px 80px rgba(0,0,0,.45), inset 0 0 45px rgba(57,255,154,.025); position: relative; }
+  .tutorial-shell::before, .tutorial-shell::after { content: ''; position: absolute; width: 34px; height: 34px; pointer-events: none; }
+  .tutorial-shell::before { left: 8px; top: 8px; border-left: 2px solid var(--cyan); border-top: 2px solid var(--cyan); }
+  .tutorial-shell::after { right: 8px; bottom: 8px; border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+  .tutorial-head { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; margin-bottom: 16px; }
+  .tutorial-kicker { color: var(--cyan); font-size: 10px; letter-spacing: 4px; margin-bottom: 5px; }
+  .tutorial-head h2 { margin: 0; color: var(--gold); font-family: var(--f-disp); font-size: clamp(24px, 5vh, 38px); letter-spacing: 6px; text-shadow: 0 0 28px rgba(255,191,71,.22); }
+  .tutorial-lead { margin: 7px 0 0; max-width: 720px; color: #c9c2d8; font-size: 13px; line-height: 1.7; }
+  .tutorial-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .manual-card { min-height: 178px; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 14px; display: grid; grid-template-columns: 132px 1fr; gap: 14px; align-items: center;
+    background: radial-gradient(circle at 12% 50%, rgba(95,227,232,.055), transparent 38%), rgba(8,8,14,.62); }
+  .manual-card.wide { grid-column: 1 / -1; grid-template-columns: 180px 1fr; }
+  .manual-no { color: var(--cyan); font-size: 9px; letter-spacing: 3px; }
+  .manual-copy h3 { margin: 3px 0 7px; font-family: var(--f-disp); font-size: 17px; letter-spacing: 2px; color: var(--ink); }
+  .manual-copy p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+  .manual-copy strong { color: var(--ink); }
+  .manual-copy .gold { color: var(--gold); } .manual-copy .cyan { color: var(--cyan); } .manual-copy .red { color: var(--red); }
+  .manual-visual { min-width: 0; display: flex; justify-content: center; align-items: center; }
+  .demo-pizza { width: 126px; height: 126px; }
+  .wide .demo-pizza { width: 164px; height: 164px; }
+  .demo-pizza svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 10px 20px rgba(0,0,0,.55)); }
+  .tutorial-actions-demo { width: 124px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .tutorial-actions-demo span { display: flex; min-height: 36px; padding: 5px 3px; align-items: center; justify-content: center; text-align: center; border: 1px solid rgba(255,191,71,.25); border-radius: 8px; background: var(--btn); color: var(--gold); font-size: 9px; line-height: 1.2; }
+  .tutorial-actions-demo .nox-demo { color: var(--cyan); border-color: rgba(95,227,232,.32); }
+  .tutorial-duel { width: 128px; display: flex; flex-direction: column; gap: 7px; }
+  .tutorial-duel .chip { text-align: center; padding: 5px 7px; }
+  .tutorial-duel .nox-demo { color: var(--cyan); border-color: rgba(95,227,232,.32); background: rgba(10,42,49,.72); }
+  .tutorial-cycle { width: 126px; height: 126px; border: 1px solid rgba(95,227,232,.25); border-radius: 50%; display: grid; place-content: center; text-align: center;
+    background: radial-gradient(circle, rgba(95,227,232,.1), transparent 62%); box-shadow: inset 0 0 24px rgba(95,227,232,.06); }
+  .tutorial-cycle b { color: var(--gold); font-family: var(--f-disp); font-size: 24px; } .tutorial-cycle span { color: var(--muted); font-size: 9px; letter-spacing: 2px; }
+  .tutorial-tip { grid-column: 1 / -1; margin-top: 2px; padding: 10px 12px; border-left: 2px solid var(--cyan); color: #b9b1ca; font-size: 11px; line-height: 1.6; background: rgba(95,227,232,.035); }
+  .tutorial-footer { display: flex; justify-content: center; align-items: center; gap: 9px; margin-top: 16px; padding-bottom: 2px; }
+  .tutorial-footer .ghost, .tutorial-head .ghost { border: 1px solid rgba(255,255,255,.09); }
+  @media (max-width: 760px) {
+    .tutorial-grid { grid-template-columns: 1fr; }
+    .manual-card, .manual-card.wide { grid-column: auto; grid-template-columns: 118px 1fr; }
+    .wide .demo-pizza { width: 126px; height: 126px; }
+    .tutorial-head h2 { letter-spacing: 3px; }
+  }
 
   /* ---------- 遊戲畫面：左 狀態 / 中 披薩 / 右 操作 ---------- */
   #s-game { display: grid; grid-template-columns: minmax(104px, 240px) auto minmax(168px, 400px); justify-content: center; gap: 8px; padding: 8px; }
@@ -190,9 +235,80 @@
         <li><span class="sw x"></span><span>魔王撒<b>辣椒</b>：技術摩擦交給 <b>Nox</b> 免費處理，生活壓力得自己花錢。</span></li>
       </ul>
       <div class="cta">
-        <button id="btn-start" class="big">開始這一週</button>
+        <div class="menu-actions">
+          <button id="btn-start" class="big">開始這一週</button>
+          <button id="btn-tutorial" class="tutorial-entry">玩法教學</button>
+        </div>
         <div class="keys">桌機：1 2 3 甜料 · Q 餅皮<br>W 處理 · E 賣出 · 空白鍵 結束採購</div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== 靜態玩法教學 ===== -->
+  <section id="s-tutorial" class="screen safe hidden" aria-labelledby="tutorial-title">
+    <div class="tutorial-shell">
+      <header class="tutorial-head">
+        <div>
+          <div class="tutorial-kicker">NOX // SURVIVAL MANUAL</div>
+          <h2 id="tutorial-title">這一週，怎麼活</h2>
+          <p class="tutorial-lead">你不是要消滅魔王，而是要在七天裡，把更多時間變回自己的生活。披薩會自己轉動；輪到你的那一片時，選擇要把什麼放進去。</p>
+        </div>
+        <button id="btn-tutorial-back-top" class="ghost">返回目錄</button>
+      </header>
+
+      <div class="tutorial-grid">
+        <article class="manual-card wide">
+          <div class="manual-visual"><div class="demo-pizza"><svg id="tutorial-clock-svg" viewBox="-140 -140 280 280" aria-label="披薩時鐘與南方金框示意"></svg></div></div>
+          <div class="manual-copy">
+            <div class="manual-no">01 // READ THE CLOCK</div>
+            <h3>只操作南方金框裡的那一片</h3>
+            <p>一整天被切成十二片，每片代表兩個小時。披薩每 <strong>3 秒</strong>順時針前進一次；只有來到<strong class="gold">南方金框</strong>的時段可以操作。北方是魔王，西方則會讓事件產生結果。</p>
+          </div>
+        </article>
+
+        <article class="manual-card">
+          <div class="manual-visual"><div class="tutorial-actions-demo" aria-hidden="true"><span>甜料<br>Ⅰ</span><span>甜料<br>Ⅱ</span><span>甜料<br>Ⅲ</span><span>改造<br>餅皮</span></div></div>
+          <div class="manual-copy">
+            <div class="manual-no">02 // MAKE A CHOICE</div>
+            <h3>甜料是今天的選擇，餅皮是長期生活</h3>
+            <p><strong class="gold">甜料</strong>會累積收益、削弱魔王，並慢慢把無主時間變成你的。等級越高，改變越快。<strong>改造餅皮</strong>成本較高，但能立刻拿回一片；已經是你的餅皮也能繼續強化。</p>
+          </div>
+        </article>
+
+        <article class="manual-card">
+          <div class="manual-visual"><div class="tutorial-duel" aria-hidden="true"><span class="chip spicy">辣椒 · 技術摩擦</span><span class="chip nox-demo">Nox 免費處理</span><span class="chip spicy">辣椒 · 生活壓力</span><span class="chip player">你自己選擇</span></div></div>
+          <div class="manual-copy">
+            <div class="manual-no">03 // KNOW THE DIFFERENCE</div>
+            <h3>Nox 能清除摩擦，不能替你過人生</h3>
+            <p>遇到<strong class="red">紅色辣椒</strong>先看它是哪一種。Gas、跨鏈等技術摩擦可交給 <strong class="cyan">Nox</strong>，每天免費 3 次；加班、支出等生活壓力則要由你花費資源處理。</p>
+          </div>
+        </article>
+
+        <article class="manual-card">
+          <div class="manual-visual"><div class="demo-pizza"><svg id="tutorial-state-svg" viewBox="-140 -140 280 280" aria-label="玩家、魔王、甜料與辣椒狀態示意"></svg></div></div>
+          <div class="manual-copy">
+            <div class="manual-no">04 // READ THE PIZZA</div>
+            <h3>看顏色，就知道時間屬於誰</h3>
+            <p><strong class="gold">金色</strong>是你的生活，<strong class="red">暗紅色</strong>屬於魔王，米色仍是無主時間。櫻桃代表甜料，辣椒代表壓力。數字是餅皮價值；價值歸零，這片時間就會失去原本的主人。</p>
+          </div>
+        </article>
+
+        <article class="manual-card">
+          <div class="manual-visual"><div class="tutorial-cycle" aria-hidden="true"><b>12</b><span>步 / 一天</span><b>7</b><span>天 / 一週</span></div></div>
+          <div class="manual-copy">
+            <div class="manual-no">05 // PREPARE TOMORROW</div>
+            <h3>每天結束，先替明天準備</h3>
+            <p>十二片走完後會有 <strong>15 秒採購</strong>。預先買好甜料和餅皮，比白天臨時購買便宜；Nox 每天還會送你一份小確幸。第七天結束後，遊戲會看你拿回多少生活、累積多少價值，以及還留下多少資源。</p>
+          </div>
+        </article>
+
+        <div class="tutorial-tip"><strong>記住就好：</strong>先看南方金框 → 判斷這片屬於誰 → 再決定加甜料、換餅皮或處理辣椒。你不需要每一片都贏；只是別讓整週都在替別人運轉。</div>
+      </div>
+
+      <footer class="tutorial-footer">
+        <button id="btn-tutorial-back" class="ghost">回到開始畫面</button>
+        <button id="btn-tutorial-start" class="big small">我知道了，開始這一週</button>
+      </footer>
     </div>
   </section>
 
@@ -522,7 +638,7 @@
   });
 
   // ---------- 流程 ----------
-  function show(id) { ['s-start', 's-game', 's-result'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); }); }
+  function show(id) { ['s-start', 's-tutorial', 's-game', 's-result'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); }); }
 
   function startGame() {
     g = Core.createGame();
@@ -602,6 +718,10 @@
     } catch (e) {}
   }
   $('btn-start').addEventListener('click', function () { goLandscape(); startGame(); });
+  $('btn-tutorial').addEventListener('click', function () { show('s-tutorial'); $('s-tutorial').scrollTop = 0; });
+  $('btn-tutorial-back-top').addEventListener('click', function () { show('s-start'); });
+  $('btn-tutorial-back').addEventListener('click', function () { show('s-start'); });
+  $('btn-tutorial-start').addEventListener('click', function () { goLandscape(); startGame(); });
   $('btn-again').addEventListener('click', startGame);
   $('btn-next').addEventListener('click', continueDay);
   $('btn-pause').addEventListener('click', function () { if (g && g.S.phase === 'play') { paused = true; $('s-pause').classList.remove('hidden'); } });
@@ -611,7 +731,7 @@
     if (document.hidden && g && g.S.phase === 'play') { paused = true; $('s-pause').classList.remove('hidden'); }
   });
   document.addEventListener('keydown', function (ev) {
-    if (!g) return;
+    if (!g || $('s-game').classList.contains('hidden')) return;
     var map = { '1': 'top1', '2': 'top2', '3': 'top3', q: 'crust', w: 'clear', e: 'sell' }, k = ev.key.toLowerCase();
     if (map[k]) { var b = btn(map[k]); if (!b.disabled) b.click(); }
     else if (k === ' ' && g.S.phase === 'shop') { ev.preventDefault(); continueDay(); }
@@ -619,6 +739,18 @@
 
   // 開始畫面的披薩
   (function hero() { var s = Core.createGame().S; s.rot = 0; renderPizza(buildPizza($('hero-svg'), false, 'hero'), s); })();
+
+  // 教學中的靜態程式圖像：沿用正式披薩、餅皮、甜料與辣椒繪製方式
+  (function tutorialDemos() {
+    var clock = Core.createGame().S; clock.rot = 0;
+    renderPizza(buildPizza($('tutorial-clock-svg'), true, 'tutorial-clock'), clock);
+    var state = Core.createGame().S; state.rot = 0;
+    state.slices.forEach(function (sl) { sl.owner = 'none'; sl.value = 0; sl.topping = null; });
+    state.slices[0].owner = 'boss'; state.slices[0].value = 18; state.slices[0].topping = { side: 'boss', tier: 2 };
+    state.slices[3].owner = 'player'; state.slices[3].value = 14; state.slices[3].topping = { side: 'player', tier: 2 };
+    state.slices[6].owner = 'player'; state.slices[6].value = 23; state.slices[9].topping = { side: 'player', tier: 1 };
+    renderPizza(buildPizza($('tutorial-state-svg'), false, 'tutorial-state'), state);
+  })();
 
   // ---------- 除錯：?autostart=1&speed=20&demo=1&touch=1 ----------
   var errBox = document.createElement('div'); errBox.id = 'err'; errBox.hidden = true; document.body.appendChild(errBox);
