@@ -67,52 +67,63 @@
   #s-start .tutorial-entry { border-color: rgba(95,227,232,.38); color: var(--cyan); background: rgba(11,34,43,.72); letter-spacing: 2px; font-weight: 700; }
   #s-start .keys { font-size: 10px; letter-spacing: 1px; color: var(--dim); line-height: 1.5; }
 
-  /* ---------- 靜態玩法教學 ---------- */
-  #s-tutorial { overflow-y: auto; padding: max(12px, 3vh) max(16px, 4vw); background: linear-gradient(180deg, rgba(6,7,10,.18), rgba(6,7,10,.72)); }
-  .tutorial-shell { width: min(1080px, 100%); margin: 0 auto; padding: clamp(16px, 3vw, 30px); border: 1px solid rgba(95,227,232,.2); border-radius: 18px;
-    background: linear-gradient(145deg, rgba(17,24,29,.94), rgba(12,10,20,.96)); box-shadow: 0 24px 80px rgba(0,0,0,.45), inset 0 0 45px rgba(57,255,154,.025); position: relative; }
-  .tutorial-shell::before, .tutorial-shell::after { content: ''; position: absolute; width: 34px; height: 34px; pointer-events: none; }
-  .tutorial-shell::before { left: 8px; top: 8px; border-left: 2px solid var(--cyan); border-top: 2px solid var(--cyan); }
-  .tutorial-shell::after { right: 8px; bottom: 8px; border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
-  .tutorial-head { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; margin-bottom: 16px; }
-  .tutorial-kicker { color: var(--cyan); font-size: 10px; letter-spacing: 4px; margin-bottom: 5px; }
-  .tutorial-head h2 { margin: 0; color: var(--gold); font-family: var(--f-disp); font-size: clamp(24px, 5vh, 38px); letter-spacing: 6px; text-shadow: 0 0 28px rgba(255,191,71,.22); }
-  .tutorial-lead { margin: 7px 0 0; max-width: 720px; color: #c9c2d8; font-size: 13px; line-height: 1.7; }
-  .tutorial-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .manual-card { min-height: 178px; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 14px; display: grid; grid-template-columns: 132px 1fr; gap: 14px; align-items: center;
+  /* ---------- 固定一屏玩法教學＋獨立數據公示 ---------- */
+  #s-tutorial { overflow: hidden; padding: max(6px, 1.5vh) max(10px, 2.5vw); background: linear-gradient(180deg, rgba(6,7,10,.18), rgba(6,7,10,.72)); }
+  #s-rules { overflow: hidden; padding: max(6px, 1.5vh) max(10px, 2.5vw); background: linear-gradient(180deg, rgba(6,7,10,.18), rgba(6,7,10,.78)); }
+  #s-catalog { overflow: hidden; padding: max(6px, 1.5vh) max(10px, 2.5vw); background: linear-gradient(180deg, rgba(6,7,10,.18), rgba(6,7,10,.78)); }
+  .tutorial-shell, .rules-shell, .catalog-shell { width: min(1080px, calc(100% - 42px)); height: 100%; margin: 0 auto; padding: clamp(8px, 2vh, 20px) clamp(10px, 2vw, 24px); border: 1px solid rgba(95,227,232,.2); border-radius: 18px;
+    background: linear-gradient(145deg, rgba(17,24,29,.94), rgba(12,10,20,.96)); box-shadow: 0 24px 80px rgba(0,0,0,.45), inset 0 0 45px rgba(57,255,154,.025); position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  .tutorial-shell::before, .tutorial-shell::after, .rules-shell::before, .rules-shell::after, .catalog-shell::before, .catalog-shell::after { content: ''; position: absolute; width: 28px; height: 28px; pointer-events: none; }
+  .tutorial-shell::before, .rules-shell::before, .catalog-shell::before { left: 8px; top: 8px; border-left: 2px solid var(--cyan); border-top: 2px solid var(--cyan); }
+  .tutorial-shell::after, .rules-shell::after, .catalog-shell::after { right: 8px; bottom: 8px; border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+  .page-bookmark { position: absolute; left: -1px; top: clamp(18px, 7vh, 54px); z-index: 2; min-height: 104px; padding: 10px 8px; transform: translateX(-100%); writing-mode: vertical-rl; border-radius: 10px 0 0 10px; border: 1px solid rgba(95,227,232,.34); border-right: 0; background: linear-gradient(180deg, rgba(11,42,49,.96), rgba(18,16,31,.98)); color: var(--cyan); font-size: 10px; font-weight: 700; letter-spacing: 3px; box-shadow: -8px 8px 24px rgba(0,0,0,.28); }
+  .page-bookmark.secondary { top: clamp(134px, 22vh, 168px); border-color: rgba(255,191,71,.34); background: linear-gradient(180deg, rgba(61,42,19,.96), rgba(25,18,24,.98)); color: var(--gold); }
+  .page-bookmark:hover, .page-bookmark:focus-visible { color: #e9ffff; border-color: rgba(95,227,232,.7); outline: none; box-shadow: -8px 8px 28px rgba(95,227,232,.1); }
+  .tutorial-head { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start; margin-bottom: clamp(5px, 1.2vh, 11px); }
+  .tutorial-kicker { color: var(--cyan); font-size: clamp(7px, 1.25vh, 10px); letter-spacing: 4px; margin-bottom: 2px; }
+  .tutorial-head h2 { margin: 0; color: var(--gold); font-family: var(--f-disp); font-size: clamp(20px, 4.8vh, 38px); line-height: 1.1; letter-spacing: 6px; text-shadow: 0 0 28px rgba(255,191,71,.22); }
+  .tutorial-lead { margin: clamp(2px, .7vh, 7px) 0 0; max-width: 820px; color: #c9c2d8; font-size: clamp(8.5px, 1.65vh, 13px); line-height: 1.45; }
+  .tutorial-grid { min-height: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)) auto; gap: clamp(4px, 1vh, 10px); }
+  .manual-card { min-width: 0; min-height: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: clamp(8px, 1.5vh, 14px); padding: clamp(5px, 1.3vh, 12px); display: grid; grid-template-columns: clamp(48px, 7vw, 92px) 1fr; gap: clamp(5px, 1vw, 11px); align-items: center;
     background: radial-gradient(circle at 12% 50%, rgba(95,227,232,.055), transparent 38%), rgba(8,8,14,.62); }
-  .manual-card.wide { grid-column: 1 / -1; grid-template-columns: 180px 1fr; }
-  .manual-no { color: var(--cyan); font-size: 9px; letter-spacing: 3px; }
-  .manual-copy h3 { margin: 3px 0 7px; font-family: var(--f-disp); font-size: 17px; letter-spacing: 2px; color: var(--ink); }
-  .manual-copy p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+  .manual-card:nth-child(-n+3) { grid-column: span 2; }
+  .manual-card:nth-child(4), .manual-card:nth-child(5) { grid-column: span 3; }
+  .manual-card.wide { grid-template-columns: clamp(48px, 7vw, 92px) 1fr; }
+  .manual-no { color: var(--cyan); font-size: clamp(6.5px, 1.05vh, 9px); line-height: 1.15; letter-spacing: 2px; }
+  .manual-copy { min-width: 0; }
+  .manual-copy h3 { margin: 2px 0 clamp(2px, .7vh, 6px); font-family: var(--f-disp); font-size: clamp(10px, 2.05vh, 17px); line-height: 1.2; letter-spacing: clamp(.5px, .16vw, 2px); color: var(--ink); }
+  .manual-copy p { margin: 0; color: var(--muted); font-size: clamp(8px, 1.45vh, 11.5px); line-height: 1.38; }
   .manual-copy strong { color: var(--ink); }
   .manual-copy .gold { color: var(--gold); } .manual-copy .cyan { color: var(--cyan); } .manual-copy .red { color: var(--red); }
   .manual-visual { min-width: 0; display: flex; justify-content: center; align-items: center; }
-  .demo-pizza { width: 126px; height: 126px; }
-  .wide .demo-pizza { width: 164px; height: 164px; }
-  .demo-pizza svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 10px 20px rgba(0,0,0,.55)); }
-  .tutorial-actions-demo { width: 124px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-  .tutorial-actions-demo span { display: flex; min-height: 36px; padding: 5px 3px; align-items: center; justify-content: center; text-align: center; border: 1px solid rgba(255,191,71,.25); border-radius: 8px; background: var(--btn); color: var(--gold); font-size: 9px; line-height: 1.2; }
+  .demo-pizza { width: clamp(50px, 10vh, 100px); height: clamp(50px, 10vh, 100px); }
+  .wide .demo-pizza { width: clamp(50px, 10vh, 100px); height: clamp(50px, 10vh, 100px); }
+  .demo-pizza svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 7px 14px rgba(0,0,0,.55)); }
+  .tutorial-actions-demo { width: clamp(52px, 9vw, 88px); display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+  .tutorial-actions-demo span { display: flex; min-height: clamp(21px, 4.7vh, 34px); padding: 2px; align-items: center; justify-content: center; text-align: center; border: 1px solid rgba(255,191,71,.25); border-radius: 6px; background: var(--btn); color: var(--gold); font-size: clamp(6px, 1.1vh, 8px); line-height: 1.15; }
   .tutorial-actions-demo .nox-demo { color: var(--cyan); border-color: rgba(95,227,232,.32); }
-  .tutorial-duel { width: 128px; display: flex; flex-direction: column; gap: 7px; }
-  .tutorial-duel .chip { text-align: center; padding: 5px 7px; }
+  .tutorial-duel { width: clamp(56px, 10vw, 94px); display: flex; flex-direction: column; gap: 3px; }
+  .tutorial-duel .chip { overflow: hidden; text-overflow: ellipsis; text-align: center; padding: 2px 4px; font-size: clamp(6px, 1.1vh, 9px); }
   .tutorial-duel .nox-demo { color: var(--cyan); border-color: rgba(95,227,232,.32); background: rgba(10,42,49,.72); }
-  .tutorial-cycle { width: 126px; height: 126px; border: 1px solid rgba(95,227,232,.25); border-radius: 50%; display: grid; place-content: center; text-align: center;
+  .tutorial-cycle { width: clamp(50px, 10vh, 92px); height: clamp(50px, 10vh, 92px); border: 1px solid rgba(95,227,232,.25); border-radius: 50%; display: grid; place-content: center; text-align: center;
     background: radial-gradient(circle, rgba(95,227,232,.1), transparent 62%); box-shadow: inset 0 0 24px rgba(95,227,232,.06); }
-  .tutorial-cycle b { color: var(--gold); font-family: var(--f-disp); font-size: 24px; } .tutorial-cycle span { color: var(--muted); font-size: 9px; letter-spacing: 2px; }
-  .tutorial-tip { grid-column: 1 / -1; margin-top: 2px; padding: 10px 12px; border-left: 2px solid var(--cyan); color: #b9b1ca; font-size: 11px; line-height: 1.6; background: rgba(95,227,232,.035); }
-  .formula-lab { grid-column: 1 / -1; margin-top: 10px; padding-top: 18px; border-top: 1px solid rgba(95,227,232,.16); }
+  .tutorial-cycle b { color: var(--gold); font-family: var(--f-disp); font-size: clamp(13px, 3vh, 22px); line-height: 1; } .tutorial-cycle span { color: var(--muted); font-size: clamp(5.5px, 1vh, 8px); letter-spacing: 1px; }
+  .tutorial-tip { grid-column: 1 / -1; padding: clamp(4px, .9vh, 8px) 10px; border-left: 2px solid var(--cyan); color: #b9b1ca; font-size: clamp(7.5px, 1.3vh, 10.5px); line-height: 1.35; background: rgba(95,227,232,.035); }
+  .formula-lab { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; scrollbar-color: rgba(95,227,232,.32) transparent; }
   .formula-heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 10px; }
-  .formula-heading h3 { margin: 0; color: var(--gold); font-family: var(--f-disp); font-size: clamp(20px, 4vh, 28px); letter-spacing: 4px; }
-  .formula-heading p { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+  .formula-heading h3 { margin: 0; color: var(--gold); font-family: var(--f-disp); font-size: clamp(16px, 3.5vh, 25px); letter-spacing: 4px; }
+  .formula-heading p { margin: 3px 0 0; color: var(--muted); font-size: 10.5px; line-height: 1.45; }
   .formula-seal { flex: 0 0 auto; color: var(--cyan); border: 1px solid rgba(95,227,232,.28); border-radius: 999px; padding: 4px 10px; font-size: 9px; letter-spacing: 2px; }
   .formula-group { margin-top: 7px; border: 1px solid rgba(255,255,255,.085); border-radius: 11px; overflow: hidden; background: rgba(5,6,11,.54); }
   .formula-group[open] { border-color: rgba(95,227,232,.22); box-shadow: inset 3px 0 0 rgba(95,227,232,.42); }
-  .formula-group summary { position: relative; display: flex; align-items: center; gap: 10px; padding: 11px 38px 11px 13px; cursor: pointer; list-style: none; user-select: none; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+  .formula-group summary { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 10px; row-gap: 3px; align-items: center; padding: 10px 38px 10px 13px; cursor: pointer; list-style: none; user-select: none; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
   .formula-group summary::-webkit-details-marker { display: none; }
   .formula-group summary::after { content: '＋'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--cyan); font-size: 16px; font-weight: 400; }
   .formula-group[open] summary::after { content: '−'; }
-  .formula-index { color: var(--cyan); font-size: 9px; letter-spacing: 2px; font-weight: 500; }
+  .formula-group[open] .formula-preview { display: none; }
+  .formula-index { grid-row: 1 / span 2; color: var(--cyan); font-size: 9px; letter-spacing: 2px; font-weight: 500; }
+  .formula-title { min-width: 0; }
+  .formula-preview { grid-column: 2; color: var(--muted); font-size: 9.5px; line-height: 1.4; font-weight: 400; letter-spacing: 0; }
   .formula-body { padding: 0 13px 14px; color: var(--muted); font-size: 11px; line-height: 1.62; }
   .formula-body p { margin: 7px 0; }
   .formula-body strong { color: var(--ink); }
@@ -131,15 +142,35 @@
   .score-breakdown div { padding: 8px; border: 1px solid rgba(255,255,255,.07); border-radius: 8px; text-align: center; background: rgba(255,255,255,.025); }
   .score-breakdown b { display: block; color: var(--gold); font-family: var(--f-disp); font-size: 17px; }
   .score-breakdown small { color: var(--muted); font-size: 8.5px; line-height: 1.35; }
-  .tutorial-footer { display: flex; justify-content: center; align-items: center; gap: 9px; margin-top: 16px; padding-bottom: 2px; }
+  .tutorial-footer { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: clamp(4px, 1vh, 10px); }
+  .tutorial-footer button { padding-top: clamp(5px, 1.2vh, 9px); padding-bottom: clamp(5px, 1.2vh, 9px); }
   .tutorial-footer .ghost, .tutorial-head .ghost { border: 1px solid rgba(255,255,255,.09); }
+  .catalog-shell { overflow-y: auto; scrollbar-color: rgba(95,227,232,.32) transparent; }
+  .catalog-intro { margin: 0 0 10px; padding: 8px 10px; border-left: 2px solid var(--gold); color: #c9c2d8; font-size: 10.5px; line-height: 1.5; background: rgba(255,191,71,.04); }
+  .catalog-section { margin-top: 9px; border: 1px solid rgba(255,255,255,.08); border-radius: 11px; padding: 10px; background: rgba(5,6,11,.42); }
+  .catalog-section h3 { margin: 0; color: var(--gold); font-family: var(--f-disp); font-size: 17px; letter-spacing: 2px; }
+  .catalog-section > p { margin: 3px 0 8px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+  .catalog-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .catalog-levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .catalog-column, .catalog-level { min-width: 0; border: 1px solid rgba(255,255,255,.065); border-radius: 8px; padding: 7px; background: rgba(255,255,255,.02); }
+  .catalog-column h4, .catalog-level h4 { margin: 0 0 5px; color: var(--cyan); font-size: 11px; line-height: 1.3; }
+  .catalog-column h4 span, .catalog-level h4 span { color: var(--muted); font-size: 9px; font-weight: 400; }
+  .catalog-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .catalog-list li { padding-left: 8px; border-left: 1px solid rgba(255,191,71,.3); color: var(--ink); font-size: 10px; line-height: 1.3; }
+  .catalog-list li strong { font-weight: 700; }
+  .catalog-list small { display: block; color: var(--muted); font-size: 9px; line-height: 1.3; }
+  .catalog-tag { display: inline-block; margin-right: 4px; color: var(--gold); font-size: 8px; letter-spacing: 1px; }
+  .catalog-tag.tech { color: var(--cyan); }
+  .catalog-note { margin: 8px 0 0; color: var(--muted); font-size: 9.5px; line-height: 1.45; }
   @media (max-width: 760px) {
-    .tutorial-grid { grid-template-columns: 1fr; }
-    .manual-card, .manual-card.wide { grid-column: auto; grid-template-columns: 118px 1fr; }
-    .wide .demo-pizza { width: 126px; height: 126px; }
     .tutorial-head h2 { letter-spacing: 3px; }
     .score-breakdown { grid-template-columns: repeat(2, minmax(92px, 1fr)); }
     .formula-seal { display: none; }
+  }
+  @media (max-width: 760px) and (orientation: landscape) {
+    .tutorial-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)) auto; }
+    .manual-card:nth-child(-n+5) { grid-column: auto; }
+    .manual-card:nth-child(5) { grid-column: 1 / -1; }
   }
 
   /* ---------- 遊戲畫面：左 狀態 / 中 披薩 / 右 操作 ---------- */
@@ -277,8 +308,10 @@
   </section>
 
   <!-- ===== 靜態玩法教學 ===== -->
-  <section id="s-tutorial" class="screen safe hidden" aria-labelledby="tutorial-title">
+  <section id="s-tutorial" class="screen safe hidden" aria-labelledby="tutorial-title" data-viewport-layout="fixed">
     <div class="tutorial-shell">
+      <button id="btn-open-rules" class="page-bookmark" aria-controls="s-rules" aria-label="開啟完整數據公示">完整數據</button>
+      <button id="btn-open-catalog" class="page-bookmark secondary" aria-controls="s-catalog" aria-label="開啟事件圖鑑">事件圖鑑</button>
       <header class="tutorial-head">
         <div>
           <div class="tutorial-kicker">NOX // SURVIVAL MANUAL</div>
@@ -335,18 +368,40 @@
         </article>
 
         <div class="tutorial-tip"><strong>記住就好：</strong>先看南方金框 → 判斷這片屬於誰 → 再決定加甜料、換餅皮或處理辣椒。你不需要每一片都贏；只是別讓整週都在替別人運轉。</div>
+      </div>
 
-        <section class="formula-lab" aria-labelledby="formula-title">
+      <footer class="tutorial-footer">
+        <button id="btn-tutorial-back" class="ghost">回到開始畫面</button>
+        <button id="btn-tutorial-start" class="big small">我知道了，開始這一週</button>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ===== 完整數據公示 ===== -->
+  <section id="s-rules" class="screen safe hidden" aria-labelledby="rules-title">
+    <div class="rules-shell" data-rules-page="disclosure">
+      <button id="btn-rules-tutorial" class="page-bookmark" aria-controls="s-tutorial" aria-label="切回這週怎麼活">這週怎麼活</button>
+      <button id="btn-rules-catalog" class="page-bookmark secondary" aria-controls="s-catalog" aria-label="開啟事件圖鑑">事件圖鑑</button>
+      <header class="tutorial-head">
+        <div>
+          <div class="tutorial-kicker">NOX // OPEN RULESET</div>
+          <h2 id="rules-title">完整數據公示</h2>
+          <p class="tutorial-lead">這裡公開遊戲真正採用的數值、機率與判定順序。每個 DATA 收合時先告訴你它管什麼；展開後，簡介會讓位給完整規則。</p>
+        </div>
+        <button id="btn-rules-back-top" class="ghost">返回目錄</button>
+      </header>
+
+      <section class="formula-lab" aria-labelledby="formula-title">
           <div class="formula-heading">
             <div>
-              <h3 id="formula-title">完整數據與公式</h3>
-              <p>以下就是遊戲真正採用的數值，沒有隱藏加成。點擊任一項即可展開或收合。</p>
+              <h3 id="formula-title">八組正式規則</h3>
+              <p>選一項展開閱讀；所有數值都直接對照遊戲目前的實際運作。</p>
             </div>
-            <span class="formula-seal">OPEN RULESET</span>
+            <span class="formula-seal">VERIFIED DATA</span>
           </div>
 
           <details class="formula-group" data-rule-section="time">
-            <summary><span class="formula-index">DATA 01</span>開局、時間與位置</summary>
+            <summary><span class="formula-index">DATA 01</span><span class="formula-title">開局、時間與位置</span><span class="formula-preview">先認識一局有幾天、每片多久、你和魔王從哪裡開始，以及畫面三個方向各自在做什麼。</span></summary>
             <div class="formula-body">
               <div class="data-scroll"><table class="data-table">
                 <thead><tr><th>數值</th><th>正式設定</th><th>功能</th></tr></thead>
@@ -365,7 +420,7 @@
           </details>
 
           <details class="formula-group" data-rule-section="toppings">
-            <summary><span class="formula-index">DATA 02</span>甜料Ⅰ／Ⅱ／Ⅲ的全部效果</summary>
+            <summary><span class="formula-index">DATA 02</span><span class="formula-title">甜料Ⅰ／Ⅱ／Ⅲ的全部效果</span><span class="formula-preview">公開三種甜料的價格、收入、削弱幅度與收回無主時間所需次數。</span></summary>
             <div class="formula-body">
               <div class="data-scroll"><table class="data-table">
                 <thead><tr><th>甜料</th><th>採購價</th><th>白天急買</th><th>自家／無主收入</th><th>自家額外增值</th><th>削弱魔王</th><th>無主轉換</th></tr></thead>
@@ -386,7 +441,7 @@
           </details>
 
           <details class="formula-group" data-rule-section="spicy">
-            <summary><span class="formula-index">DATA 03</span>辣椒、侵蝕與 Nox</summary>
+            <summary><span class="formula-index">DATA 03</span><span class="formula-title">辣椒、侵蝕與 Nox</span><span class="formula-preview">說明辣椒如何扣錢、侵蝕餅皮，以及哪些摩擦能交給 Nox、哪些仍得自己處理。</span></summary>
             <div class="formula-body">
               <div class="data-scroll"><table class="data-table">
                 <thead><tr><th>辣度</th><th>每次扣現金</th><th>侵蝕玩家餅皮</th><th>實際淨侵蝕</th><th>無主轉魔王</th></tr></thead>
@@ -408,7 +463,7 @@
           </details>
 
           <details class="formula-group" data-rule-section="crusts">
-            <summary><span class="formula-index">DATA 04</span>餅皮價值、購買、替換與賣出</summary>
+            <summary><span class="formula-index">DATA 04</span><span class="formula-title">餅皮價值、購買、替換與賣出</span><span class="formula-preview">查清楚餅皮價格怎麼算、何時能替換，以及賣出後會留下什麼。</span></summary>
             <div class="formula-body">
               <div class="data-scroll"><table class="data-table">
                 <thead><tr><th>採購餅皮價值</th><th>10</th><th>20</th><th>30</th><th>45</th></tr></thead>
@@ -428,7 +483,7 @@
           </details>
 
           <details class="formula-group" data-rule-section="economy">
-            <summary><span class="formula-index">DATA 05</span>每日收入、支出與資源用途</summary>
+            <summary><span class="formula-index">DATA 05</span><span class="formula-title">每日收入、支出與資源用途</span><span class="formula-preview">整理 CASH、NOX、餅皮價值與庫存各自能做什麼，還有每天換日時的收入與生活成本。</span></summary>
             <div class="formula-body">
               <span class="formula">第 2～7 天開始現金 = 原有現金 + $70 − 累積生活成本（最低降至 $0）</span>
               <ul class="formula-list">
@@ -442,7 +497,7 @@
           </details>
 
           <details class="formula-group" data-rule-section="boss">
-            <summary><span class="formula-index">DATA 06</span>魔王事件機率與成長規則</summary>
+            <summary><span class="formula-index">DATA 06</span><span class="formula-title">魔王事件機率與成長規則</span><span class="formula-preview">公開魔王各種事件從第幾天出現、擲中的機率，以及它們真正檢查的先後順序。</span></summary>
             <div class="formula-body">
               <p class="warning">魔王不是把所有事件同時骰一次，而是依下列順序檢查；前面的事件成功並生效後，這一步通常就停止，不再檢查後面的事件。因此表中的數字是「輪到該項檢查時」的機率。</p>
               <div class="data-scroll"><table class="data-table">
@@ -464,7 +519,7 @@
           </details>
 
           <details class="formula-group" data-rule-section="settlement">
-            <summary><span class="formula-index">DATA 07</span>西方結算的完整先後順序</summary>
+            <summary><span class="formula-index">DATA 07</span><span class="formula-title">西方結算的完整先後順序</span><span class="formula-preview">拆開每片抵達西方後的處理流程，理解為什麼表面效果和最後淨變化可能不同。</span></summary>
             <div class="formula-body">
               <ol class="formula-list">
                 <li>如果整片仍被抽走：跳過所有結算。</li>
@@ -478,7 +533,7 @@
           </details>
 
           <details class="formula-group" data-rule-section="score">
-            <summary><span class="formula-index">DATA 08</span>幸福指數與勝負判定</summary>
+            <summary><span class="formula-index">DATA 08</span><span class="formula-title">幸福指數與勝負判定</span><span class="formula-preview">公開領地、價值、現金、魔王與辣椒如何計分，也說清楚分數和勝負為何是兩套判定。</span></summary>
             <div class="formula-body">
               <div class="score-breakdown" aria-label="幸福指數各項權重">
                 <div><b>+15</b><small>每片玩家領地</small></div>
@@ -498,11 +553,134 @@
             </div>
           </details>
         </section>
-      </div>
 
       <footer class="tutorial-footer">
-        <button id="btn-tutorial-back" class="ghost">回到開始畫面</button>
-        <button id="btn-tutorial-start" class="big small">我知道了，開始這一週</button>
+        <button id="btn-rules-back" class="ghost">回到開始畫面</button>
+        <button id="btn-rules-start" class="big small">看完數據，開始這一週</button>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ===== 事件圖鑑 ===== -->
+  <section id="s-catalog" class="screen safe hidden" aria-labelledby="catalog-title" data-catalog-page="events">
+    <div class="catalog-shell">
+      <button id="btn-catalog-tutorial" class="page-bookmark" aria-controls="s-tutorial" aria-label="切回這週怎麼活">這週怎麼活</button>
+      <button id="btn-catalog-rules" class="page-bookmark secondary" aria-controls="s-rules" aria-label="開啟完整數據公示">完整數據</button>
+      <header class="tutorial-head">
+        <div>
+          <div class="tutorial-kicker">NOX // LIFE EVENT INDEX</div>
+          <h2 id="catalog-title">事件圖鑑</h2>
+          <p class="tutorial-lead">這裡收錄餅皮與調料代表的生活事件。先看白話，再回到披薩上做選擇；圖鑑只幫你認識它們，不會增加新的規則。</p>
+        </div>
+        <button id="btn-catalog-back-top" class="ghost">返回目錄</button>
+      </header>
+
+      <div class="catalog-intro"><strong>讀法很簡單：</strong>餅皮是長期形成的生活，甜料是你主動放進去的選擇，辣料是落在某個時段的壓力。NOXCAT 的功能只放在小字裡，主角一直是你正在過的日子。</div>
+
+      <section class="catalog-section">
+        <h3>餅皮｜長期生活結構</h3>
+        <p>餅皮代表一段時間慢慢變成什麼樣子；數字越高，代表這種生活越穩固。</p>
+        <div class="catalog-columns">
+          <div class="catalog-column">
+            <h4>你的餅皮 <span>把選擇留給自己</span></h4>
+            <ul class="catalog-list">
+              <li><strong>留白薄餅</strong><small>第一次替自己保留一段不被安排的時間。</small></li>
+              <li><strong>穩定節奏餅</strong><small>休息、健康和關係開始成為固定日常。</small></li>
+              <li><strong>自主配置餅</strong><small>時間、金錢與資產開始由自己安排。</small></li>
+              <li><strong>長期選擇餅</strong><small>也替未來、家人和共同體保留選擇。</small></li>
+            </ul>
+          </div>
+          <div class="catalog-column">
+            <h4>魔王餅皮 <span>生活被外界填滿</span></h4>
+            <ul class="catalog-list">
+              <li><strong>被占用的時段</strong><small>一段時間暫時交給工作或責任。</small></li>
+              <li><strong>固定運轉的日程</strong><small>偶爾一次，慢慢變成每天如此。</small></li>
+              <li><strong>抵押選擇的生活</strong><small>日子看似穩定，自主權卻逐漸變少。</small></li>
+              <li><strong>替你決定的人生</strong><small>外界已經替你寫好什麼叫成功。</small></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="catalog-section">
+        <h3>甜料｜主動放進人生的事件</h3>
+        <p>甜料不是抽象的加分，它們是你願意重複做、慢慢拿回時間的選擇。</p>
+        <div class="catalog-levels">
+          <div class="catalog-level">
+            <h4>甜料Ⅰ 小確幸 <span>先拿回一點呼吸</span></h4>
+            <ul class="catalog-list">
+              <li><span class="catalog-tag">生活</span><strong>好好吃完一頓飯</strong><small>不邊回訊息邊吞下晚餐。</small></li>
+              <li><span class="catalog-tag">生活</span><strong>回覆老朋友的問候</strong><small>把注意力放回關係。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>用名字還朋友一頓飯</strong><small>直接認出對方，不必核對長地址。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>沒感覺到手續費的付款</strong><small>複雜費用退到背景處理。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>一次送達另一條鏈</strong><small>你說終點，路徑有人在背景整理。</small></li>
+            </ul>
+          </div>
+          <div class="catalog-level">
+            <h4>甜料Ⅱ 好習慣 <span>重複的選擇開始累積</span></h4>
+            <ul class="catalog-list">
+              <li><span class="catalog-tag">生活</span><strong>固定留給身體的時間</strong><small>散步、運動或休息不再靠運氣。</small></li>
+              <li><span class="catalog-tag">生活</span><strong>準時關掉工作的夜晚</strong><small>睡眠不再是做完所有事後的碎屑。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>把散落的資產整理在一起</strong><small>看懂跨鏈、跨帳戶真正擁有什麼。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>讓長期參與慢慢累積</strong><small>持續參與，不追逐一次性的刺激。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>把現實資產放進同一張地圖</strong><small>把數位資產和現實規劃放在一起。</small></li>
+            </ul>
+          </div>
+          <div class="catalog-level">
+            <h4>甜料Ⅲ 生活自主 <span>高投入，立即改變一段人生</span></h4>
+            <ul class="catalog-list">
+              <li><span class="catalog-tag">生活</span><strong>拒絕沒有意義的加班</strong><small>說出界線，也承擔改變的成本。</small></li>
+              <li><span class="catalog-tag">生活</span><strong>選擇真正想走的道路</strong><small>重新安排人生的重心。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>把資產控制權留在自己手上</strong><small>方便使用，但重要行動仍由你授權。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>和陌生人完成一場安心交易</strong><small>讓條件與規則守住承諾。</small></li>
+              <li><span class="catalog-tag">NOXCAT</span><strong>替共同的未來投下一票</strong><small>從使用者成為規則的參與者。</small></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="catalog-section">
+        <h3>辣料｜落進生活的摩擦</h3>
+        <p>技術摩擦可以請 Nox 幫忙；生活壓力仍要由你做決定，這是兩者最重要的差別。</p>
+        <div class="catalog-levels">
+          <div class="catalog-level">
+            <h4>辣料Ⅰ 小摩擦 <span>煩人，但還沒改變生活</span></h4>
+            <ul class="catalog-list">
+              <li><span class="catalog-tag">生活</span><strong>通勤臨時延誤</strong><small>原本的休息時間被吃掉。</small></li>
+              <li><span class="catalog-tag">生活</span><strong>睡前又來一則工作訊息</strong><small>注意力被重新拉回工作。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>付款前才發現沒有 Gas</strong><small>簡單付款卻先要找另一種幣。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>選錯了交易網路</strong><small>資產在別條鏈，得重新確認。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>複製地址時心裡一驚</strong><small>害怕一個字元錯就送錯。</small></li>
+            </ul>
+          </div>
+          <div class="catalog-level">
+            <h4>辣料Ⅱ 中摩擦 <span>開始消耗金錢與注意力</span></h4>
+            <ul class="catalog-list">
+              <li><span class="catalog-tag">生活</span><strong>臨時加班變成整個晚上</strong><small>原本安排被工作完整吞掉。</small></li>
+              <li><span class="catalog-tag">生活</span><strong>一筆沒預料到的支出</strong><small>財務壓力讓其他選擇延後。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>跨鏈路徑繞了太多站</strong><small>橋接、換幣、切網路反覆操作。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>成交前價格突然滑走</strong><small>結果和原本預期產生落差。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>看不懂的無限授權</strong><small>不確定自己究竟同意了什麼。</small></li>
+            </ul>
+          </div>
+          <div class="catalog-level">
+            <h4>辣料Ⅲ 大危機 <span>可能形成長期失控</span></h4>
+            <ul class="catalog-list">
+              <li><span class="catalog-tag">生活</span><strong>身心耗盡卻不敢停下</strong><small>倦怠已侵蝕健康與關係。</small></li>
+              <li><span class="catalog-tag">生活</span><strong>工作危機逼你放棄選擇</strong><small>收入與安全感受到威脅。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>裝置遺失，錢包進不去</strong><small>遺失裝置後需要安全復原。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>交易對方沒有履行承諾</strong><small>條件、託管與仲裁協助處理爭議。</small></li>
+              <li><span class="catalog-tag tech">技術</span><strong>熟人的名字可能是冒充</strong><small>先確認身份，再決定要不要授權。</small></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <p class="catalog-note"><strong>圖鑑提醒：</strong>這些名稱幫你辨認「正在發生什麼」，不會改變甜料、辣料或餅皮的數值。NOXCAT 能整理技術路徑，但不能代替你處理加班、倦怠或人生方向。</p>
+
+      <footer class="tutorial-footer">
+        <button id="btn-catalog-back" class="ghost">回到開始畫面</button>
+        <button id="btn-catalog-start" class="big small">看懂了，開始這一週</button>
       </footer>
     </div>
   </section>
@@ -833,7 +1011,12 @@
   });
 
   // ---------- 流程 ----------
-  function show(id) { ['s-start', 's-tutorial', 's-game', 's-result'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); }); }
+  function show(id) { ['s-start', 's-tutorial', 's-rules', 's-catalog', 's-game', 's-result'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); }); }
+  function openManualPage(id) {
+    show(id);
+    var page = $(id), scroll = page && page.querySelector('.formula-lab, .catalog-shell');
+    if (scroll) scroll.scrollTop = 0;
+  }
 
   function startGame() {
     g = Core.createGame();
@@ -913,10 +1096,22 @@
     } catch (e) {}
   }
   $('btn-start').addEventListener('click', function () { goLandscape(); startGame(); });
-  $('btn-tutorial').addEventListener('click', function () { show('s-tutorial'); $('s-tutorial').scrollTop = 0; });
+  $('btn-tutorial').addEventListener('click', function () { show('s-tutorial'); });
+  $('btn-open-rules').addEventListener('click', function () { openManualPage('s-rules'); });
+  $('btn-open-catalog').addEventListener('click', function () { openManualPage('s-catalog'); });
+  $('btn-rules-tutorial').addEventListener('click', function () { show('s-tutorial'); });
+  $('btn-rules-catalog').addEventListener('click', function () { openManualPage('s-catalog'); });
   $('btn-tutorial-back-top').addEventListener('click', function () { show('s-start'); });
   $('btn-tutorial-back').addEventListener('click', function () { show('s-start'); });
+  $('btn-rules-back-top').addEventListener('click', function () { show('s-start'); });
+  $('btn-rules-back').addEventListener('click', function () { show('s-start'); });
   $('btn-tutorial-start').addEventListener('click', function () { goLandscape(); startGame(); });
+  $('btn-rules-start').addEventListener('click', function () { goLandscape(); startGame(); });
+  $('btn-catalog-tutorial').addEventListener('click', function () { show('s-tutorial'); });
+  $('btn-catalog-rules').addEventListener('click', function () { openManualPage('s-rules'); });
+  $('btn-catalog-back-top').addEventListener('click', function () { show('s-start'); });
+  $('btn-catalog-back').addEventListener('click', function () { show('s-start'); });
+  $('btn-catalog-start').addEventListener('click', function () { goLandscape(); startGame(); });
   $('btn-again').addEventListener('click', startGame);
   $('btn-next').addEventListener('click', continueDay);
   $('btn-pause').addEventListener('click', function () { if (g && g.S.phase === 'play') { paused = true; $('s-pause').classList.remove('hidden'); } });
