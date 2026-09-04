@@ -95,6 +95,17 @@ for (const value of [
   "['s-start', 's-tutorial', 's-rules', 's-catalog', 's-game', 's-result']"
 ]) expectText(html, value, '教學與公示分頁');
 
+for (const value of [
+  "$('btn-open-rules').addEventListener('click', function () { openManualPage('s-rules'); });",
+  "$('btn-open-catalog').addEventListener('click', function () { openManualPage('s-catalog'); });",
+  "$('btn-rules-catalog').addEventListener('click', function () { openManualPage('s-catalog'); });",
+  "$('btn-catalog-rules').addEventListener('click', function () { openManualPage('s-rules'); });"
+]) expectText(html, value, '左側書籤導覽接線');
+
+const activeButtonRule = html.match(/button:active:not\(:disabled\)\s*\{([^}]*)\}/);
+if (!activeButtonRule) fail('缺少按鈕按下時的回饋');
+else if (/transform\s*:/.test(activeButtonRule[1])) fail('按鈕按下時不得改變位置，否則書籤會跳走並中斷點擊');
+
 const tutorialStart = html.indexOf('<section id="s-tutorial"');
 const rulesStart = html.indexOf('<section id="s-rules"');
 const catalogStart = html.indexOf('<section id="s-catalog"');
